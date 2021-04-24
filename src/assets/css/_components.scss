@@ -1,0 +1,31 @@
+.app-label-lg {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.app-label-md {
+  font-size: 1.5rem;
+  @include respond(phone) {
+    font-size: 1.1rem;
+  }
+}
+
+.app-label-sm {
+  font-size: 1.25rem;
+}
+
+.app-label-xs {
+  font-size: 1, 125rem;
+}
+
+.v-icon.rotate {
+  transform: rotate(180deg);
+}
+
+.v-icon.rotate-half {
+  transform: rotate(90deg);
+}
+
+.v-icon.rotate-infinite {
+  animation: progress-circular-rotate 0.9s linear infinite;
+}

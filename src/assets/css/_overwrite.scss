@@ -1,0 +1,32 @@
+.v-application p {
+  margin-bottom: 0px;
+}
+
+.v-application {
+  font-family: "PT Sans", sans-serif;
+}
+
+.v-icon {
+  transition: all 0.2s ease-in-out;
+}
+
+.v-btn {
+  text-transform: unset;
+  font-size: inherit;
+  letter-spacing: 0;
+}
+
+.v-messages__message {
+  font-size: 15px;
+}
+
+.v-tooltip__content {
+  background: white;
+  opacity: 1 !important;
+  color: #565656;
+  border: 1px solid #c4c4c4;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.15);
+  line-height: 1.125rem;
+  max-width: 300px;
+  padding: 0.5rem 1rem;
+}

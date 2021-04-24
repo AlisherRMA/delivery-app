@@ -1,0 +1,134 @@
+<template>
+  <!-- <section id="dish">
+    <v-card @click="onExpandClick" max-width="700" class="d-flex dish" :class="{ 'expanded-card': isExpanded }">
+      <v-img height="150px" class="dish__poster" :src="dish.image" :alt="dish.title" srcset="" />
+      <v-card-text class="pointer">
+        <div class="d-flex flex-column dish__info">
+          <span class="app-label-md bold">{{ dish.title }}</span>
+          <span>{{ dish.description }}</span>
+          <span class="lightBlue--text">{{ dish.price }} ₸</span>
+        </div>
+      </v-card-text>
+    </v-card>
+  </section> -->
+  <v-card id="dish" class="mx-auto" max-width="700">
+    <!-- <v-card-text>
+      <div>Word of the Day</div>
+      <p class="display-1 text--primary">
+        el·ee·mos·y·nar·y
+      </p>
+      <p>adjective</p>
+      <div class="text--primary">
+        relating to or dependent on charity; charitable.<br />
+        "an eleemosynary educational institution."
+      </div>
+    </v-card-text>
+    <v-card-actions>
+      <v-btn text color="teal accent-4" @click="reveal = true">
+        Learn More
+      </v-btn>
+    </v-card-actions> -->
+    <div @click="reveal = true" class="d-flex dish pointer">
+      <v-img max-height="150px" class="dish__poster order-1" :src="dish.image" :alt="dish.title" srcset="" />
+
+      <div class="d-flex flex-column dish__info">
+        <span class="app-label-md bold">{{ dish.title }}</span>
+        <span>{{ dish.description }}</span>
+        <span class="lightBlue--text">{{ dish.price }} ₸</span>
+      </div>
+    </div>
+
+    <v-expand-transition>
+      <v-card v-if="reveal" @click="reveal = false" class="transition-fast-in-fast-out v-card--reveal" style="height: 100%;">
+        <v-card-text class="pb-0">
+          <!-- <v-img height="150px" class="dish__poster order-1" :src="dish.image" :alt="dish.title" srcset="" /> -->
+          <p class="display-1 text--primary">
+            Origin
+          </p>
+          <p>
+            late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’,
+            late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’,
+            late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’,
+            late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’,
+            late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’,
+            late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’,
+            late 16th century (as a noun denoting a place where alms were distributed): from medieval Latin eleemosynarius, from late Latin eleemosyna ‘alms’,
+            from Greek eleēmosunē ‘compassion’
+          </p>
+        </v-card-text>
+      </v-card>
+    </v-expand-transition>
+  </v-card>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { IDish } from "../@types/dish.type";
+
+@Component
+export default class extends Vue {
+  @Prop()
+  private dish: IDish;
+
+  isExpanded = false;
+  reveal = false;
+
+  onExpandClick() {
+    this.isExpanded = !this.isExpanded;
+  }
+}
+</script>
+
+<style lang="scss">
+.v-card--reveal {
+  bottom: 0;
+  opacity: 1 !important;
+  position: absolute;
+  width: 100%;
+}
+
+.dish {
+  &__poster {
+    max-width: 300px;
+    margin-left: auto;
+    border-radius: 5px;
+  }
+}
+
+#dish {
+  max-width: 50rem;
+
+  // .dish {
+  //   transition: all 0.5s;
+  //   &:hover {
+  //     background-color: rgba(230, 227, 227, 0.774);
+  //   }
+
+  //   &__info {
+  //     order: 0;
+  //   }
+
+  //   &__poster {
+  //     max-width: 300px;
+  //     border-radius: 5px;
+  //     margin-left: auto;
+  //     order: 1;
+  //   }
+  // }
+
+  // .expanded-card {
+  //   flex-direction: column;
+
+  //   .dish {
+  //     &__info {
+  //       order: 1;
+  //     }
+  //     &__poster {
+  //       max-width: 500px;
+  //       margin: auto;
+  //       order: 1;
+  //     }
+  //   }
+  // }
+}
+</style>

@@ -1,0 +1,26 @@
+@import "components";
+@import "mixins";
+@import "overwrite";
+@import "utils";
+@import "variables";
+
+body {
+  font-size: 100%;
+  @include respond(phone) {
+    font-size: 80%;
+  }
+}
+
+.module-header {
+  font-weight: 700;
+  font-size: 1.75rem;
+  line-height: 2.25rem;
+}
+
+.color-inherit {
+  color: inherit !important;
+}
+
+table {
+  table-layout: fixed; // IMPORTANT :)
+}
