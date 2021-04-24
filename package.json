@@ -10,12 +10,15 @@
     "serve": "vue-cli-service serve",
     "debug": "node --inspect ./node_modules/@vue/cli-service/bin/vue-cli-service.js serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "node server.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "express": "^4.17.1",
     "inputmask": "^5.0.5",
     "moment": "^2.29.1",
+    "serve-static": "^1.14.1",
     "tslib": "^2.2.0",
     "v-mask": "^2.2.4",
     "vue": "^2.6.11",
