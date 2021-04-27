@@ -6,7 +6,7 @@
         <div class="sidebar" v-if="!isMobile"><Sidebar :groups="dishes" /></div>
         <div class="dish-groups">
           <div v-for="(group, i) in dishes" :key="i" :id="group.id">
-            <div class="text-center bold">{{ group.groupTitle }}</div>
+            <div class="text-center app-label-lg bold">{{ group.groupTitle }}</div>
             <div v-for="(dish, index) in group.dishes" :key="index" class="mx-2">
               <Dish :dish="dish" class="my-4" />
             </div>

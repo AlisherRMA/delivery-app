@@ -8,6 +8,12 @@
     <title><%= VUE_APP_TITLE%></title>
   </head>
 
+  <!-- Any polyfill to enable smoothscroll for the JavaScript APIs -->
+  <script src="https://unpkg.com/smoothscroll-polyfill/dist/smoothscroll.min.js"></script>
+
+  <!-- This package, to apply the smoothscroll to anchor links -->
+  <script src="https://unpkg.com/smoothscroll-anchor-polyfill"></script>
+
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>

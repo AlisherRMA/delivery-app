@@ -38,7 +38,9 @@ export default class AppMain extends Vue {}
   clip-path: circle(55% at 0 46%);
 
   @include respond(phone) {
-    clip-path: circle(70% at -30% 50%);
+    // clip-path: circle(70% at -30% 50%);
+    clip-path: none;
+    background: unset;
   }
 
   padding-right: 250px;

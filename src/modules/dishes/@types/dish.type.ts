@@ -4,6 +4,7 @@ export interface IDish {
   price: number;
   image: string;
   id: number;
+  detailedDescription?: string;
 }
 
 export interface IDishGroup {

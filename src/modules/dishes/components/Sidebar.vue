@@ -9,21 +9,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { IDishGroup } from "../@types/dish.type";
+import { Component } from "vue-property-decorator";
+import SidebarMixin from "../mixins/sidebar.mixin";
 
 @Component
-export default class extends Vue {
-  @Prop()
-  private groups: IDishGroup[];
-
-  scrollTo(group: IDishGroup) {
-    if (!group.id) return;
-    const position = document.getElementById(group.id)?.offsetTop;
-    // smooth scroll
-    window.scrollTo({ top: position, behavior: "smooth" });
-  }
-}
+export default class extends SidebarMixin {}
 </script>
 
 <style lang="scss">

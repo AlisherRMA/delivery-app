@@ -10,7 +10,7 @@
         <v-icon>mdi-cart-outline</v-icon>
         <!-- <v-avatar class="items-count" color="white" >{{ selectedItemsCount }}</v-avatar> -->
       </v-btn>
-      <v-avatar style="position: absolute" v-show="selectedItemsCount" class="items-count" color="secondary" size="18">
+      <v-avatar style="position: absolute" v-show="selectedItemsCount" class="items-count" color="#4b878bff" size="18">
         {{ selectedItemsCount }}
       </v-avatar>
     </span>
