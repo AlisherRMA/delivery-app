@@ -1,13 +1,13 @@
 <template>
-  <section>
-    <SidebarMobile v-if="isMobile" :groups="dishes" />
+  <section id="items_section">
+    <SidebarMobile v-if="isMobile" :groups="productGroups" />
     <div class="d-flex align-center justify-center full-width" :class="{ 'scroll-margin': isMobile }">
       <div class="dish-groups-wrapper">
-        <div class="sidebar" v-if="!isMobile"><Sidebar :groups="dishes" /></div>
+        <div class="sidebar" v-if="!isMobile"><Sidebar :groups="productGroups" /></div>
         <div class="dish-groups">
-          <div v-for="(group, i) in dishes" :key="i" :id="group.id">
+          <div v-for="(group, i) in productGroups" :key="i" :id="group.identificator">
             <div class="text-center app-label-lg bold">{{ group.groupTitle }}</div>
-            <div v-for="(dish, index) in group.dishes" :key="index" class="mx-2">
+            <div v-for="(dish, index) in group.products" :key="index" class="mx-2">
               <Dish :dish="dish" class="my-4" />
             </div>
           </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
 
 import Dish from "../components/Dish.vue";
 import Sidebar from "../components/Sidebar.vue";
@@ -29,9 +29,14 @@ import BasketSnackbar from "../components/Snackbar.vue";
 import { IDishGroup } from "../@types/dish.type";
 import { dishesHardcodedList } from "../utils/dishesList";
 import { BasketModule } from "../store/basket.module";
+import SidebarMixin from "../mixins/sidebar.mixin";
+import { ProductsService } from "../api/products.service";
+import { ProductGroups } from "../@types/product.type";
 
 @Component({ components: { Dish, Sidebar, SidebarMobile, BasketSnackbar } })
-export default class extends Vue {
+export default class extends SidebarMixin {
+  productGroups: ProductGroups[] = [];
+
   get isMobile() {
     return this.$vuetify.breakpoint.xs;
   }
@@ -61,6 +66,12 @@ export default class extends Vue {
     BasketModule.setOverallPrice(overallPrice);
     BasketModule.setDishesCount(dishesCount);
     this.$refs.basketSnackbarRef.showBasketSnackbar();
+  }
+
+  async mounted() {
+    this.productGroups = await ProductsService.getProducts();
+    // const container = document.getElementById("items_section");
+    // console.log(container?.offsetTop);
   }
 }
 </script>

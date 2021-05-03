@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-show="isSidebarVisible">
     <div class="scrollmenu">
       <a v-for="(group, i) in groups" :key="i" @click="scrollTo(group)" class="to-uppercase">{{ group.groupTitle }}</a>
     </div>

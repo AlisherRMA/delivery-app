@@ -3,7 +3,7 @@
     <v-app style="position:relative">
       <AppHeader />
 
-      <v-main class="mt-12">
+      <v-main>
         <AppMain />
       </v-main>
       <!-- <AppFooter /> -->

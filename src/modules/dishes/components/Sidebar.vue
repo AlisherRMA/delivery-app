@@ -1,19 +1,26 @@
 <template>
-  <section>
-    <div v-for="(group, i) in groups" :key="i">
-      <span class="pointer to-uppercase cool-link" @click="scrollTo(group)">
-        {{ group.groupTitle }}
-      </span>
-    </div>
-  </section>
+  <v-expand-transition>
+    <section v-if="isVisible">
+      <div v-for="(group, i) in groups" :key="i">
+        <span class="pointer to-uppercase cool-link" @click="scrollTo(group)">
+          {{ group.groupTitle }}
+        </span>
+      </div>
+    </section>
+  </v-expand-transition>
 </template>
 
 <script lang="ts">
+import { ScrollModule } from "@/modules/base/store/scroll.module";
 import { Component } from "vue-property-decorator";
 import SidebarMixin from "../mixins/sidebar.mixin";
 
 @Component
-export default class extends SidebarMixin {}
+export default class extends SidebarMixin {
+  get isVisible() {
+    return ScrollModule.isDesktopSidebarVisible;
+  }
+}
 </script>
 
 <style lang="scss">

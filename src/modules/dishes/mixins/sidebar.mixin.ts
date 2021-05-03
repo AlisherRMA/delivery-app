@@ -1,5 +1,7 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { IDishGroup } from "../@types/dish.type";
+import { ScrollModule } from "../../base/store/scroll.module";
+import { ProductGroups } from "../@types/product.type";
 
 @Component
 export default class SidebarMixin extends Vue {
@@ -10,9 +12,13 @@ export default class SidebarMixin extends Vue {
     return this.$vuetify.breakpoint.xs;
   }
 
-  scrollTo(group: IDishGroup) {
-    if (!group.id) return;
-    let position = document.getElementById(group.id)?.offsetTop;
+  get isSidebarVisible() {
+    return ScrollModule.isDesktopSidebarVisible;
+  }
+
+  scrollTo(group: ProductGroups) {
+    if (!group.identificator) return;
+    let position = document.getElementById(group.identificator)?.offsetTop;
     if (this.isMobile && position) position -= 60;
 
     // smooth scroll

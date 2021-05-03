@@ -5,6 +5,8 @@ import i18n from "@/plugins/i18n";
 
 export const setApiServiceLocale = () => {
   axios.defaults.headers.common["Accept-Language"] = LocaleService.getLocale();
+  // axios.defaults.baseURL = "http://localhost:3000";
+  axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
 };
 
 setApiServiceLocale();
