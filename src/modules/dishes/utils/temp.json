@@ -1,0 +1,213 @@
+[
+  {
+    "category_id": 1,
+    "identificator": "category-prds-1",
+    "groupTitle": "Мёд",
+    "products": [
+      {
+        "id": 1,
+        "category_id": 1,
+        "category_name": "Мёд",
+        "product_name": "Крем Мёд",
+        "description": "Мёд богат естественной глюкозой и фруктозой, витаминами В1, В2, В6, Е, К, С, провитамина А-каротин и фолиевой кислотой.",
+        "image_link": "https://i.ibb.co/bHYr3xv/Screenshot-20210427-185646.jpg",
+        "prices": [
+          { "id": 1, "weight": 300, "price": 1500, "discount": 0 },
+          { "id": 2, "weight": 400, "price": 2000, "discount": 0 }
+        ]
+      },
+      {
+        "id": 2,
+        "category_id": 1,
+        "category_name": "Мёд",
+        "product_name": "Финики с орехами в меду",
+        "description": null,
+        "image_link": "https://i.ibb.co/D9f2z3t/Screenshot-20210427-185724.jpg",
+        "prices": []
+      },
+      {
+        "id": 3,
+        "category_id": 1,
+        "category_name": "Мёд",
+        "product_name": "Грецкие орехи в меду",
+        "description": null,
+        "image_link": "https://i.ibb.co/yh2ffPK/Screenshot-20210427-185618.jpg",
+        "prices": [{ "id": 3, "weight": 500, "price": 2500, "discount": 0 }]
+      },
+      {
+        "id": 4,
+        "category_id": 1,
+        "category_name": "Мёд",
+        "product_name": "Миндаль в меду",
+        "description": null,
+        "image_link": "https://i.ibb.co/z7KQ74f/Screenshot-20210427-185524.jpg",
+        "prices": []
+      }
+    ]
+  },
+  {
+    "category_id": 2,
+    "identificator": "category-prds-2",
+    "groupTitle": "Варенье",
+    "products": [
+      {
+        "id": 5,
+        "category_id": 2,
+        "category_name": "Варенье",
+        "product_name": "Малина-Клюква",
+        "description": null,
+        "image_link": "https://i.ibb.co/ck7GqTf/Screenshot-20210427-185410-01.jpg",
+        "prices": []
+      },
+      {
+        "id": 6,
+        "category_id": 2,
+        "category_name": "Варенье",
+        "product_name": "Яблочное варенье",
+        "description": null,
+        "image_link": "https://i.ibb.co/gmbHcN3/Screenshot-20210427-185323.jpg",
+        "prices": []
+      },
+      {
+        "id": 7,
+        "category_id": 2,
+        "category_name": "Варенье",
+        "product_name": "Лимонное варенье",
+        "description": null,
+        "image_link": "https://i.ibb.co/44QwcsN/Screenshot-20210427-185158.jpg",
+        "prices": []
+      },
+      {
+        "id": 8,
+        "category_id": 2,
+        "category_name": "Варенье",
+        "product_name": "Черничное варенье",
+        "description": null,
+        "image_link": "https://i.ibb.co/DVj9xjM/Screenshot-20210427-185221.jpg",
+        "prices": []
+      }
+    ]
+  },
+  {
+    "category_id": 4,
+    "identificator": "category-prds-4",
+    "groupTitle": "Орехи в меду",
+    "products": [
+      {
+        "id": 9,
+        "category_id": 4,
+        "category_name": "Орехи в меду",
+        "product_name": "Фундук в меду",
+        "description": null,
+        "image_link": "https://i.ibb.co/BCtM6wS/photo-2021-04-28-09-44-35.jpg",
+        "prices": []
+      },
+      {
+        "id": 10,
+        "category_id": 4,
+        "category_name": "Орехи в меду",
+        "product_name": "Миндаль в меду",
+        "description": null,
+        "image_link": "https://i.ibb.co/BTJjyhW/photo-2021-04-28-09-45-35.jpg",
+        "prices": []
+      },
+      {
+        "id": 11,
+        "category_id": 4,
+        "category_name": "Орехи в меду",
+        "product_name": "Тыквенные семечки в меду",
+        "description": null,
+        "image_link": "https://i.ibb.co/LQWp6Xb/photo-2021-04-28-09-47-24.jpg",
+        "prices": []
+      },
+      {
+        "id": 12,
+        "category_id": 4,
+        "category_name": "Орехи в меду",
+        "product_name": "Ореховое ассорти в меду",
+        "description": null,
+        "image_link": "https://i.ibb.co/L9bt01b/photo-2021-04-28-18-05-49.jpg",
+        "prices": []
+      },
+      {
+        "id": 13,
+        "category_id": 4,
+        "category_name": "Орехи в меду",
+        "product_name": "Кешью в меду",
+        "description": null,
+        "image_link": "https://i.ibb.co/BcyGrf6/photo-2021-04-28-18-07-19.jpg",
+        "prices": []
+      }
+    ]
+  },
+  {
+    "category_id": 5,
+    "identificator": "category-prds-5",
+    "groupTitle": "Подарки",
+    "products": [
+      {
+        "id": 14,
+        "category_id": 5,
+        "category_name": "Подарки",
+        "product_name": "Дуэт малина+мёд",
+        "description": null,
+        "image_link": "https://i.ibb.co/vhNS7ZF/IMG-5694.jpg",
+        "prices": []
+      },
+      {
+        "id": 15,
+        "category_id": 5,
+        "category_name": "Подарки",
+        "product_name": "Дуэт лимон+мёд",
+        "description": null,
+        "image_link": "https://i.ibb.co/bzZ3T3X/IMG-5703.jpg",
+        "prices": []
+      },
+      {
+        "id": 16,
+        "category_id": 5,
+        "category_name": "Подарки",
+        "product_name": "Классик",
+        "description": null,
+        "image_link": "https://i.ibb.co/nPg5jH9/IMG-5863.jpg",
+        "prices": []
+      },
+      {
+        "id": 17,
+        "category_id": 5,
+        "category_name": "Подарки",
+        "product_name": "Витаминный",
+        "description": null,
+        "image_link": "https://i.ibb.co/t346LqV/IMG-6017.jpg",
+        "prices": []
+      },
+      {
+        "id": 18,
+        "category_id": 5,
+        "category_name": "Подарки",
+        "product_name": "Витаминный МАХ",
+        "description": null,
+        "image_link": "https://i.ibb.co/3pH0NtB/IMG-6033.jpg",
+        "prices": []
+      },
+      {
+        "id": 19,
+        "category_id": 5,
+        "category_name": "Подарки",
+        "product_name": "Ореховый",
+        "description": null,
+        "image_link": "https://i.ibb.co/WKyqbPv/IMG-6042.jpg",
+        "prices": []
+      },
+      {
+        "id": 20,
+        "category_id": 5,
+        "category_name": "Подарки",
+        "product_name": "Набор \"VIP\"",
+        "description": null,
+        "image_link": "https://i.ibb.co/KD2CxbF/IMG-6047.jpg",
+        "prices": []
+      }
+    ]
+  }
+]

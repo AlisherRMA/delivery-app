@@ -1,14 +1,15 @@
 <template>
   <div class="text-center">
-    <v-snackbar v-model="snackbar" :multi-line="multiLine">
+    <v-snackbar v-model="snackbar" color="primary" :multi-line="multiLine" :timeout="-1">
       Вы выбрали {{ dishesCount }} {{ postfix }} на сумму {{ overallPrice }} ₸
 
       <template v-slot:action="{ attrs }">
-        <v-btn color="red" text v-bind="attrs" @click="snackbar = false">
+        <v-btn color="white" text v-bind="attrs" @click="onOpenBasketClicked">
           Перейти в корзину
         </v-btn>
       </template>
     </v-snackbar>
+    <Basket ref="basketRef" />
   </div>
 </template>
 
@@ -16,11 +17,17 @@
 import { Component, Vue } from "vue-property-decorator";
 import { BasketModule } from "../store/basket.module";
 
-@Component
+import Basket from "./Basket.vue";
+
+@Component({ components: { Basket } })
 export default class BasketSnackbar extends Vue {
   multiLine = true;
   snackbar = false;
   text = `I'm a multi-line snackbar.`;
+
+  $refs: {
+    basketRef: Basket;
+  };
 
   get overallPrice() {
     return BasketModule.overallPrice;
@@ -38,6 +45,11 @@ export default class BasketSnackbar extends Vue {
 
   showBasketSnackbar() {
     this.snackbar = true;
+  }
+
+  onOpenBasketClicked() {
+    this.snackbar = false;
+    this.$refs.basketRef.show();
   }
 }
 </script>

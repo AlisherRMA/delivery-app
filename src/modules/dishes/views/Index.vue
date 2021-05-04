@@ -8,7 +8,7 @@
           <div v-for="(group, i) in productGroups" :key="i" :id="group.identificator">
             <div class="text-center app-label-lg bold">{{ group.groupTitle }}</div>
             <div v-for="(dish, index) in group.products" :key="index" class="mx-2">
-              <Dish :dish="dish" class="my-4" />
+              <Dish :product="dish" class="my-4" />
             </div>
           </div>
         </div>
@@ -59,10 +59,11 @@ export default class extends SidebarMixin {
     let overallPrice = 0;
     let dishesCount = 0;
     this.selectedDishes.map(dish => {
-      if (dish.count <= 1) overallPrice += dish.price;
-      else overallPrice += dish.count * dish.price;
-      dishesCount += dish.count;
+      // computing the overall cost
+      for (const selection of Object.values(dish.selection)) if (selection.count >= 0) overallPrice += selection.price * selection.count;
+      dishesCount += dish.overallCount;
     });
+
     BasketModule.setOverallPrice(overallPrice);
     BasketModule.setDishesCount(dishesCount);
     this.$refs.basketSnackbarRef.showBasketSnackbar();
@@ -70,8 +71,6 @@ export default class extends SidebarMixin {
 
   async mounted() {
     this.productGroups = await ProductsService.getProducts();
-    // const container = document.getElementById("items_section");
-    // console.log(container?.offsetTop);
   }
 }
 </script>

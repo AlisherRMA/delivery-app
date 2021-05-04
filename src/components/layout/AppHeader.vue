@@ -4,7 +4,7 @@
       <v-spacer></v-spacer>
 
       <span style="position:relative;">
-        <v-btn icon>
+        <v-btn icon @click="onOpenBasketClicked">
           <v-icon color="white">mdi-cart-outline</v-icon>
         </v-btn>
         <v-avatar style="position: absolute" v-show="selectedItemsCount" class="items-count" color="#4b878bff" size="18">
@@ -30,6 +30,7 @@
         </div>
       </div>
     </div>
+    <Basket ref="basketRef" />
   </section>
 </template>
 
@@ -40,9 +41,11 @@ import { Component, Vue } from "vue-property-decorator";
 import { BasketModule } from "@/modules/dishes/store/basket.module";
 import { ScrollModule } from "@/modules/base/store/scroll.module";
 
+import Basket from "@/modules/dishes/components/Basket.vue";
+
 @Component({
   name: "AppHeader",
-  components: { LanguageChanger },
+  components: { LanguageChanger, Basket },
 })
 export default class AppNavbar extends Vue {
   get selectedItemsInBasket() {
@@ -67,6 +70,10 @@ export default class AppNavbar extends Vue {
 
   imageContainerHeight = 9999;
   imageContainer: any = null;
+
+  $refs: {
+    basketRef: Basket;
+  };
 
   onOpenLink(href: string) {
     window.open(href, "blank");
@@ -98,6 +105,10 @@ export default class AppNavbar extends Vue {
       if (ScrollModule.isDesktopSidebarVisible) return;
       ScrollModule.setDesktopSidebarVisible(true);
     }
+  }
+
+  onOpenBasketClicked() {
+    this.$refs.basketRef.show();
   }
 }
 </script>

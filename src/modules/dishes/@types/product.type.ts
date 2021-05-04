@@ -5,7 +5,7 @@ export interface Product {
   product_name: string;
   description?: string;
   image_link: string;
-  prices: ProductPrice[] | string;
+  prices: ProductPrice[];
 }
 
 export interface ProductPrice {
@@ -13,6 +13,7 @@ export interface ProductPrice {
   weight: number;
   price: number;
   discount: number;
+  count: number;
 }
 
 export interface ProductGroups {
@@ -20,4 +21,11 @@ export interface ProductGroups {
   identificator: string;
   groupTitle: string;
   products: Product[];
+}
+
+export interface SelectedProduct extends Product {
+  overallCount: number;
+  selection: {
+    [key: number]: ProductPrice;
+  };
 }

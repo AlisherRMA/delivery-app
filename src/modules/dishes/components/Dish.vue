@@ -2,7 +2,7 @@
   <v-card class="mx-auto" max-width="800">
     <v-expand-transition>
       <div v-show="isExpanded" class="pointer expanded-image-container" @click="isExpanded = !isExpanded">
-        <v-img :src="dish.image_link" height="250px" style="border-top-left-radius:5px; border-top-right-radius:5px;"></v-img>
+        <v-img :src="product.image_link" height="250px" style="border-top-left-radius:5px; border-top-right-radius:5px;"></v-img>
       </div>
     </v-expand-transition>
 
@@ -10,15 +10,15 @@
       <v-col :cols="isExpanded ? 12 : 7">
         <div class="d-flex flex-column dish__info ml-3">
           <p class="app-label-md bold">
-            <span v-if="overallCount" class="primary--text">{{ overallCount }}x</span> {{ dish.product_name }}
+            <span v-if="overallCount" class="primary--text">{{ overallCount }}x</span> {{ product.product_name }}
           </p>
-          <div class="dish__description"><ReadMore :text="dish.description || ''" :maxChars="isExpanded ? 9999 : 60" /></div>
+          <div class="dish__description"><ReadMore :text="product.description || ''" :maxChars="isExpanded ? 9999 : 60" /></div>
           <!-- <span class="lightBlue--text">{{ dish.price }} ₸</span> -->
         </div>
       </v-col>
       <v-col cols="5" v-show="!isExpanded">
         <div class="dish__image-container" v-show="!isExpanded">
-          <v-img :src="dish.image_link" max-height="100%"></v-img>
+          <v-img :src="product.image_link" max-height="100%"></v-img>
         </div>
       </v-col>
     </section>
@@ -26,79 +26,30 @@
     <v-expand-transition>
       <div v-show="isExpanded">
         <v-divider></v-divider>
-        <div class="pa-6 d-flex justify-space-between align-center">
-          <v-col cols="7">
-            <div class="app-label-sm d-flex align-center mb-1">
-              <v-icon color="primary" class="mr-2">mdi-weight-kilogram</v-icon><span class="bold">Вес</span>: 150 гр
-            </div>
-            <div class="app-label-sm d-flex align-center mb-1">
-              <v-icon color="primary" class="mr-2">mdi-cash-multiple</v-icon><span class="bold">Цена</span>: 1100 ₸
-            </div>
-            <div class="app-label-sm d-flex align-center mb-1">
-              <v-icon color="primary" class="mr-2">mdi-counter</v-icon><span class="bold">Количество</span>: {{ firstSelectionCount }}
-            </div>
-          </v-col>
+        <div v-for="(price, i) in product.prices" :key="i">
+          <div class="pa-4 d-flex justify-space-between align-center">
+            <v-col cols="4" class="d-flex pr-0">
+              <div class="app-label-sm"><span class="bold">Вес</span>: {{ price.weight }} гр</div>
+            </v-col>
+            <v-col cols="2" class="px-0">
+              <div class="app-label-sm lightBlue--text">{{ price.price }} ₸</div>
+            </v-col>
 
-          <div>
-            <v-btn color="primary" class="mr-1" :large="!isMobile" :small="isMobile" outlined depressed @click="onDecrmentCount('firstSelectionCount')"
-              ><v-icon>mdi-minus-thick</v-icon></v-btn
-            >
-            <v-btn color="primary" :large="!isMobile" :small="isMobile" outlined depressed @click="onIncrementCount('firstSelectionCount')">
-              <v-icon>mdi-plus-thick</v-icon>
-            </v-btn>
+            <div>
+              <v-btn color="primary" :large="!isMobile" :small="isMobile" outlined depressed @click="onDecrmentCount(i)"
+                ><v-icon>mdi-minus-thick</v-icon></v-btn
+              >
+              <span v-if="selection[i]"> {{ selection[i].count }} </span>
+              <v-btn color="primary" :large="!isMobile" :small="isMobile" outlined depressed @click="onIncrementCount(i)">
+                <v-icon>mdi-plus-thick</v-icon>
+              </v-btn>
+            </div>
           </div>
+          <v-divider></v-divider>
         </div>
         <v-divider></v-divider>
-
-        <!-- <div class="pa-6 d-flex justify-space-between align-center">
-          <v-col cols="7">
-            <div class="app-label-sm d-flex align-center mb-1">
-              <v-icon color="primary" class="mr-2">mdi-weight-kilogram</v-icon><span class="bold">Вес</span>: 300 гр
-            </div>
-            <div class="app-label-sm d-flex align-center mb-1">
-              <v-icon color="primary" class="mr-2">mdi-cash-multiple</v-icon><span class="bold">Цена</span>: 2100 ₸
-            </div>
-            <div class="app-label-sm d-flex align-center mb-1">
-              <v-icon color="primary" class="mr-2">mdi-counter</v-icon><span class="bold">Количество</span>: {{ secondSelectionCount }}
-            </div>
-          </v-col>
-
-          <div>
-            <v-btn color="primary" class="mr-1" :large="!isMobile" :small="isMobile" outlined depressed @click="onDecrmentCount('secondSelectionCount')"
-              ><v-icon>mdi-minus-thick</v-icon></v-btn
-            >
-            <v-btn color="primary" :large="!isMobile" :small="isMobile" outlined depressed @click="onIncrementCount('secondSelectionCount')">
-              <v-icon>mdi-plus-thick</v-icon>
-            </v-btn>
-          </div>
-        </div>
-        <v-divider></v-divider> -->
-
-        <!-- <div class="pa-6 d-flex justify-space-between align-center">
-          <v-col cols="7">
-            <div class="app-label-sm d-flex align-center mb-1">
-              <v-icon color="primary" class="mr-2">mdi-weight-kilogram</v-icon><span class="bold">Вес</span>: 500 гр
-            </div>
-            <div class="app-label-sm d-flex align-center mb-1">
-              <v-icon color="primary" class="mr-2">mdi-cash-multiple</v-icon><span class="bold">Цена</span>: 3500 ₸
-            </div>
-            <div class="app-label-sm d-flex align-center mb-1">
-              <v-icon color="primary" class="mr-2">mdi-counter</v-icon><span class="bold">Количество</span>: {{ thirdSelectionCount }}
-            </div>
-          </v-col>
-
-          <div>
-            <v-btn color="primary" class="mr-1" :large="!isMobile" :small="isMobile" outlined depressed @click="onDecrmentCount('thirdSelectionCount')"
-              ><v-icon>mdi-minus-thick</v-icon></v-btn
-            >
-            <v-btn color="primary" :large="!isMobile" :small="isMobile" outlined depressed @click="onIncrementCount('thirdSelectionCount')">
-              <v-icon>mdi-plus-thick</v-icon>
-            </v-btn>
-          </div>
-        </div> -->
-        <v-divider></v-divider>
-        <v-card-text v-if="dish.detailedDescription">
-          <div v-html="dish.detailedDescription"></div>
+        <v-card-text v-if="product.detailedDescription">
+          <div v-html="product.detailedDescription"></div>
         </v-card-text>
       </div>
     </v-expand-transition>
@@ -107,18 +58,20 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { IDish, ISelectedDish } from "../@types/dish.type";
 import ReadMore from "@/components/ui/ReadMore.vue";
 import { BasketModule } from "../store/basket.module";
+import { Product, SelectedProduct } from "../@types/product.type";
 
 @Component({ components: { ReadMore } })
 export default class extends Vue {
   @Prop()
-  private dish: IDish;
+  private product: Product;
 
   isExpanded = false;
 
   overallCount = 0;
+
+  selection = { overallCount: 0 };
 
   firstSelectionCount = 0;
   secondSelectionCount = 0;
@@ -132,8 +85,17 @@ export default class extends Vue {
     this.isExpanded = !this.isExpanded;
   }
 
-  get payload(): ISelectedDish {
-    return { ...this.dish, count: this.overallCount };
+  get payload(): SelectedProduct {
+    return { ...this.product, selection: this.selection, overallCount: this.overallCount };
+  }
+
+  mounted() {
+    if (this.product.prices?.length) {
+      this.product.prices.map((item, index) => {
+        this.$set(this.selection, index, { ...item });
+        this.selection[index].count = 0;
+      });
+    }
   }
 
   onAddToOrder() {
@@ -141,15 +103,15 @@ export default class extends Vue {
     BasketModule.addToSelectedItems(this.payload);
   }
 
-  onIncrementCount(counter) {
+  onIncrementCount(selectionIndex: number) {
     this.overallCount++;
-    this[counter]++;
+    this.selection[selectionIndex].count++;
     BasketModule.addToSelectedItems(this.payload);
   }
 
-  onDecrmentCount(counter) {
+  onDecrmentCount(selectionIndex: number) {
     this.overallCount--;
-    this[counter]--;
+    this.selection[selectionIndex].count--;
     BasketModule.removeFromSelectedItems(this.payload);
   }
 }
