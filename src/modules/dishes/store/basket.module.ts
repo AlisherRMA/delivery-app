@@ -40,6 +40,18 @@ class BasketVuexModule extends VuexModule {
   setDishesCount(dishesCount: number) {
     this.dishesCount = dishesCount;
   }
+
+  expandedItems: number[] = [];
+
+  @Mutation
+  setExpandedItems(itemId: number) {
+    this.expandedItems = [itemId];
+  }
+
+  @Mutation
+  clearExpandedItems() {
+    this.expandedItems = [];
+  }
 }
 
 export const BasketModule = getModule(BasketVuexModule);

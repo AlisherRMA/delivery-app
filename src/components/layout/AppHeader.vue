@@ -1,5 +1,5 @@
 <template>
-  <section id="app-header-main">
+  <section id="app-header-main" v-if="isHeaderVisible">
     <v-app-bar :color="isDesktopSidebarVisible ? 'primary' : 'transparent'" style="z-index: 16" fixed dense flat>
       <v-spacer></v-spacer>
 
@@ -48,14 +48,15 @@ import Basket from "@/modules/dishes/components/Basket.vue";
   components: { LanguageChanger, Basket },
 })
 export default class AppNavbar extends Vue {
+  get isHeaderVisible() {
+    return this.$route.name !== "Signin";
+  }
   get selectedItemsCount() {
     return BasketModule.dishesCount;
   }
-
   get isDesktopSidebarVisible() {
     return ScrollModule.isDesktopSidebarVisible;
   }
-
   get links() {
     return [
       { icon: "mdi-map-marker-radius", href: "https://go.2gis.com/idpt1o", text: "Алматы, Шевченко 121" },
@@ -64,7 +65,6 @@ export default class AppNavbar extends Vue {
     ];
   }
 
-  imageContainerHeight = 9999;
   imageContainer: any = null;
 
   $refs: {
@@ -74,17 +74,14 @@ export default class AppNavbar extends Vue {
   onOpenLink(href: string) {
     window.open(href, "blank");
   }
-
-  checkVisible(elm) {
-    const rect = elm.getBoundingClientRect();
-    const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-    return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+  onOpenBasketClicked() {
+    this.$refs.basketRef.show();
   }
 
+  // LIFECYCLE HOOKS
   mounted() {
     this.imageContainer = document.getElementById("header-img");
   }
-
   created() {
     window.addEventListener("scroll", this.handleScroll);
   }
@@ -92,6 +89,7 @@ export default class AppNavbar extends Vue {
     window.removeEventListener("scroll", this.handleScroll);
   }
 
+  // SCROLL HANDLERS
   handleScroll() {
     const isMainHeaderImageVisible = this.checkVisible(this.imageContainer);
     if (isMainHeaderImageVisible) {
@@ -102,9 +100,10 @@ export default class AppNavbar extends Vue {
       ScrollModule.setDesktopSidebarVisible(true);
     }
   }
-
-  onOpenBasketClicked() {
-    this.$refs.basketRef.show();
+  checkVisible(elm) {
+    const rect = elm.getBoundingClientRect();
+    const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+    return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
   }
 }
 </script>

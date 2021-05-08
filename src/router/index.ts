@@ -12,7 +12,10 @@ VueRouter.prototype.push = async function(location: RawLocation) {
 
 Vue.use(VueRouter);
 
-export const routes: RouteConfig[] = [{ path: "/", name: "ItemsList", component: () => import("../modules/dishes/views/Index.vue") }];
+export const routes: RouteConfig[] = [
+  { path: "/", name: "ItemsList", component: () => import("../modules/dishes/views/Index.vue") },
+  { path: "/signin", name: "Signin", component: () => import("../modules/auth/views/Index.vue") },
+];
 
 const router = new VueRouter({
   mode: "history",

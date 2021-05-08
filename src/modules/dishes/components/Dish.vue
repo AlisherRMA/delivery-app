@@ -13,7 +13,6 @@
             <span v-if="product.overallUserSelectionCount" class="primary--text">{{ product.overallUserSelectionCount }}x</span> {{ product.product_name }}
           </p>
           <div class="dish__description"><ReadMore :text="product.description || ''" :maxChars="isExpanded ? 9999 : 60" /></div>
-          <!-- <span class="lightBlue--text">{{ dish.price }} ₸</span> -->
         </div>
       </v-col>
       <v-col cols="5" v-show="!isExpanded">
@@ -60,34 +59,37 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ReadMore from "@/components/ui/ReadMore.vue";
 import { Product } from "../@types/product.type";
+import { BasketModule } from "../store/basket.module";
 
 @Component({ components: { ReadMore } })
 export default class extends Vue {
   @Prop()
   private product: Product;
 
-  isExpanded = false;
-
-  firstSelectionCount = 0;
-  secondSelectionCount = 0;
-  thirdSelectionCount = 0;
-
-  get isMobile() {
-    return this.$vuetify.breakpoint.xs;
+  // VUEX DATA
+  get expandedItems() {
+    return BasketModule.expandedItems;
+  }
+  get isExpanded() {
+    return this.expandedItems.includes(this.product.id);
+  }
+  set isExpanded(_val) {
+    if (this.expandedItems.includes(this.product.id)) BasketModule.clearExpandedItems();
+    else BasketModule.setExpandedItems(this.product.id);
   }
 
-  onExpandClick() {
-    this.isExpanded = !this.isExpanded;
-  }
-
+  // FUNCTIONAL
   onIncrementCount(selectionIndex: number) {
     this.product.overallUserSelectionCount++;
     this.product.prices[selectionIndex].userSelectionCount++;
   }
-
   onDecrmentCount(selectionIndex: number) {
     this.product.overallUserSelectionCount--;
     this.product.prices[selectionIndex].userSelectionCount--;
+  }
+
+  get isMobile() {
+    return this.$vuetify.breakpoint.xs;
   }
 }
 </script>
