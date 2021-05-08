@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <div class="text-center" v-if="dishesCount > 0">
     <v-snackbar v-model="snackbar" color="primary" :multi-line="multiLine" :timeout="-1">
       Вы выбрали {{ dishesCount }} {{ postfix }} на сумму {{ overallPrice }} ₸
 
@@ -38,9 +38,9 @@ export default class BasketSnackbar extends Vue {
   }
 
   get postfix() {
-    if (this.dishesCount === 1) return "блюдо";
-    if (this.dishesCount > 1 && this.dishesCount <= 4) return "блюда";
-    else return "блюд";
+    if (this.dishesCount === 1) return "товар";
+    if (this.dishesCount > 1 && this.dishesCount <= 4) return "товара";
+    else return "товаров";
   }
 
   showBasketSnackbar() {

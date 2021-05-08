@@ -48,10 +48,6 @@ import Basket from "@/modules/dishes/components/Basket.vue";
   components: { LanguageChanger, Basket },
 })
 export default class AppNavbar extends Vue {
-  get selectedItemsInBasket() {
-    return BasketModule.selectedDishes;
-  }
-
   get selectedItemsCount() {
     return BasketModule.dishesCount;
   }
@@ -96,7 +92,7 @@ export default class AppNavbar extends Vue {
     window.removeEventListener("scroll", this.handleScroll);
   }
 
-  handleScroll(event) {
+  handleScroll() {
     const isMainHeaderImageVisible = this.checkVisible(this.imageContainer);
     if (isMainHeaderImageVisible) {
       if (!ScrollModule.isDesktopSidebarVisible) return;

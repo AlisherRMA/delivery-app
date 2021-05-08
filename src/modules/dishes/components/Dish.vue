@@ -6,11 +6,11 @@
       </div>
     </v-expand-transition>
 
-    <section class="d-flex dish pointer" v-ripple :class="{ left_border: overallCount > 0 }" @click="isExpanded = !isExpanded">
+    <section class="d-flex dish pointer" v-ripple :class="{ left_border: product.overallUserSelectionCount > 0 }" @click="isExpanded = !isExpanded">
       <v-col :cols="isExpanded ? 12 : 7">
         <div class="d-flex flex-column dish__info ml-3">
           <p class="app-label-md bold">
-            <span v-if="overallCount" class="primary--text">{{ overallCount }}x</span> {{ product.product_name }}
+            <span v-if="product.overallUserSelectionCount" class="primary--text">{{ product.overallUserSelectionCount }}x</span> {{ product.product_name }}
           </p>
           <div class="dish__description"><ReadMore :text="product.description || ''" :maxChars="isExpanded ? 9999 : 60" /></div>
           <!-- <span class="lightBlue--text">{{ dish.price }} ₸</span> -->
@@ -34,12 +34,12 @@
             <v-col cols="2" class="px-0">
               <div class="app-label-sm lightBlue--text">{{ price.price }} ₸</div>
             </v-col>
-
             <div>
               <v-btn color="primary" :large="!isMobile" :small="isMobile" outlined depressed @click="onDecrmentCount(i)"
                 ><v-icon>mdi-minus-thick</v-icon></v-btn
               >
-              <span v-if="selection[i]"> {{ selection[i].count }} </span>
+              <span v-if="product.prices && product.prices[i]"> {{ product.prices[i].userSelectionCount }} </span>
+              <span v-else class="px-1">0</span>
               <v-btn color="primary" :large="!isMobile" :small="isMobile" outlined depressed @click="onIncrementCount(i)">
                 <v-icon>mdi-plus-thick</v-icon>
               </v-btn>
@@ -59,8 +59,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import ReadMore from "@/components/ui/ReadMore.vue";
-import { BasketModule } from "../store/basket.module";
-import { Product, SelectedProduct } from "../@types/product.type";
+import { Product } from "../@types/product.type";
 
 @Component({ components: { ReadMore } })
 export default class extends Vue {
@@ -68,10 +67,6 @@ export default class extends Vue {
   private product: Product;
 
   isExpanded = false;
-
-  overallCount = 0;
-
-  selection = { overallCount: 0 };
 
   firstSelectionCount = 0;
   secondSelectionCount = 0;
@@ -85,34 +80,14 @@ export default class extends Vue {
     this.isExpanded = !this.isExpanded;
   }
 
-  get payload(): SelectedProduct {
-    return { ...this.product, selection: this.selection, overallCount: this.overallCount };
-  }
-
-  mounted() {
-    if (this.product.prices?.length) {
-      this.product.prices.map((item, index) => {
-        this.$set(this.selection, index, { ...item });
-        this.selection[index].count = 0;
-      });
-    }
-  }
-
-  onAddToOrder() {
-    this.overallCount = 1;
-    BasketModule.addToSelectedItems(this.payload);
-  }
-
   onIncrementCount(selectionIndex: number) {
-    this.overallCount++;
-    this.selection[selectionIndex].count++;
-    BasketModule.addToSelectedItems(this.payload);
+    this.product.overallUserSelectionCount++;
+    this.product.prices[selectionIndex].userSelectionCount++;
   }
 
   onDecrmentCount(selectionIndex: number) {
-    this.overallCount--;
-    this.selection[selectionIndex].count--;
-    BasketModule.removeFromSelectedItems(this.payload);
+    this.product.overallUserSelectionCount--;
+    this.product.prices[selectionIndex].userSelectionCount--;
   }
 }
 </script>

@@ -30,47 +30,53 @@ import { IDishGroup } from "../@types/dish.type";
 import { dishesHardcodedList } from "../utils/dishesList";
 import { BasketModule } from "../store/basket.module";
 import SidebarMixin from "../mixins/sidebar.mixin";
-import { ProductsService } from "../api/products.service";
-import { ProductGroups } from "../@types/product.type";
 
 @Component({ components: { Dish, Sidebar, SidebarMobile, BasketSnackbar } })
-export default class extends SidebarMixin {
-  productGroups: ProductGroups[] = [];
+export default class ProductGroupsIndexView extends SidebarMixin {
+  // productGroups: ProductGroups[] = [];
 
   get isMobile() {
     return this.$vuetify.breakpoint.xs;
   }
+
   get dishes(): IDishGroup[] {
     return dishesHardcodedList;
   }
-  get selectedDishes() {
-    return BasketModule.selectedDishes;
+
+  get productGroups() {
+    return BasketModule.productGroups;
   }
-  get overallPrice() {
-    return BasketModule.overallPrice;
+
+  get selectedProducts() {
+    return BasketModule.selectedProducts;
   }
 
   $refs: {
     basketSnackbarRef: BasketSnackbar;
   };
 
-  @Watch("selectedDishes", { deep: true })
+  @Watch("selectedProducts", { deep: true })
   onDishesChanged() {
     let overallPrice = 0;
-    let dishesCount = 0;
-    this.selectedDishes.map(dish => {
+    let selectedProductsCount = 0;
+
+    this.selectedProducts.map(product => {
+      // computing the overall count
+      selectedProductsCount += product.overallUserSelectionCount;
       // computing the overall cost
-      for (const selection of Object.values(dish.selection)) if (selection.count >= 0) overallPrice += selection.price * selection.count;
-      dishesCount += dish.overallCount;
+      for (const selection of Object.values(product.prices)) {
+        if (selection.userSelectionCount >= 0) overallPrice += selection.price * selection.userSelectionCount;
+      }
     });
 
     BasketModule.setOverallPrice(overallPrice);
-    BasketModule.setDishesCount(dishesCount);
+    BasketModule.setDishesCount(selectedProductsCount);
+    if (selectedProductsCount === 0) return;
     this.$refs.basketSnackbarRef.showBasketSnackbar();
   }
 
   async mounted() {
-    this.productGroups = await ProductsService.getProducts();
+    await BasketModule.getProductsList();
   }
 }
 </script>
