@@ -13,7 +13,7 @@
       </span>
 
       <v-btn icon>
-        <v-icon color="white">mdi-account</v-icon>
+        <v-icon color="white" @click="openManagementPage">mdi-account</v-icon>
       </v-btn>
     </v-app-bar>
     <v-img id="header-img" src="@/assets/images/navbar_image.jpg" height="20vh"> </v-img>
@@ -76,6 +76,9 @@ export default class AppNavbar extends Vue {
   }
   onOpenBasketClicked() {
     this.$refs.basketRef.show();
+  }
+  openManagementPage() {
+    this.$router.push({ name: "Management" });
   }
 
   // LIFECYCLE HOOKS

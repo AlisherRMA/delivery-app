@@ -135,9 +135,10 @@ export default class BasketDialog extends Vue {
     selection.userSelectionCount--;
     product.overallUserSelectionCount--;
   }
-  onConfirm(payload: UserContactsDto) {
+  // eslint-disable-next-line
+  onConfirm(_payload: UserContactsDto) {
     this.onNextStep();
-    console.log(payload);
+    // console.log(payload);
 
     // this.hideDialog();
   }
