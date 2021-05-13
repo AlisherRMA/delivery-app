@@ -32,3 +32,8 @@ export interface ProductGroups {
   groupTitle: string;
   products: Product[];
 }
+
+export interface Category {
+  category_id: number;
+  name: string;
+}

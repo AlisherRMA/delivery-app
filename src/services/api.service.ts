@@ -2,11 +2,13 @@ import axios, { AxiosError } from "axios";
 import { LocaleService } from "./locale.service";
 import baseModule from "@/store/base.module";
 import i18n from "@/plugins/i18n";
+import { AuthService } from "@/modules/auth/services/auth.service";
 
 export const setApiServiceLocale = () => {
   axios.defaults.headers.common["Accept-Language"] = LocaleService.getLocale();
   // axios.defaults.baseURL = "http://localhost:3000";
   axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${AuthService.getAuthToken()}`;
 };
 
 setApiServiceLocale();

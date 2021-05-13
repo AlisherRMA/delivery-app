@@ -1,6 +1,6 @@
 <template>
   <v-expansion-panels class="mb-3" :readonly="readonly">
-    <v-expansion-panel>
+    <v-expansion-panel v-model="opened">
       <v-expansion-panel-header class="label expansion-header">
         <slot name="header">{{ title }}</slot>
         <template v-slot:actions>
@@ -31,6 +31,8 @@ export default class ExpansionPanel extends Vue {
   readonly readonly: boolean;
   @Prop({ default: false })
   readonly eager: boolean;
+  @Prop({ default: false, type: Boolean })
+  readonly opened: boolean;
 }
 </script>
 

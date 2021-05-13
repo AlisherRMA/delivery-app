@@ -6,7 +6,7 @@
           <div class="d-flex px-3 pt-3">
             <v-icon :color="color">{{ getIcon(color) }}</v-icon>
             <div class="flex-grow-1 main-text px-4 pt-4">
-              <span v-html="text" class="word-break" />
+              <span v-html="text" />
             </div>
           </div>
           <v-card-actions class="justify-center pb-5 pl-9 mt-4">
@@ -23,14 +23,14 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class ApproveIntersectingRequestDialog extends Vue {
+export default class ConfirmDialog extends Vue {
   @Prop({ default: "success" })
   private color: string;
   @Prop({ required: true })
   private text: string;
-  @Prop({ default: "Yes" })
+  @Prop({ default: "Да" })
   private positiveText: string;
-  @Prop({ default: "No" })
+  @Prop({ default: "Нет" })
   private negativeText: string;
 
   isDialogVisible = false;
