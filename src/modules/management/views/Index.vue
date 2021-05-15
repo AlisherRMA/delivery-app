@@ -8,16 +8,10 @@
       <v-tab-item> <ProductsManagement :products="products" /> </v-tab-item>
       <v-tab-item> <GroupsManagement :groups="groups" @onGroupsUpdated="onGroupsUpdated" /> </v-tab-item>
     </v-tabs-items>
-
-    <TiptapVue />
-    <!-- <div v-if="productsGroups && productsGroups.length">
-      <expansion-panel v-for="(productsGroup, i) in productsGroups" :key="i" :title="productsGroup.groupTitle" />
-    </div> -->
   </div>
 </template>
 
 <script lang="ts">
-import { BasketModule } from "@/modules/dishes/store/basket.module";
 import { Component, Vue } from "vue-property-decorator";
 
 import GroupsManagement from "../components/Groups.vue";

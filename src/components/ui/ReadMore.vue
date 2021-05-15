@@ -9,7 +9,7 @@
               {{ activator }}
             </button>
           </template>
-          <span>{{ $t("common.expand") }}</span>
+          <span>Развернуть</span>
         </v-tooltip>
       </span>
     </p>

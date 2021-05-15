@@ -5,12 +5,12 @@
     </div>
     <div v-if="products && products.length">
       <v-data-table :headers="headers" :items="products" mobile-breakpoint="md">
-        <!-- <template #items="{item}">
-          <tr>
+        <template #item="{item}">
+          <tr @click="onClickOnRow(item)" class="pointer">
             <td>{{ item.category_name }}</td>
             <td>{{ item.product_name }}</td>
           </tr>
-        </template> -->
+        </template>
       </v-data-table>
     </div>
   </section>
@@ -33,6 +33,10 @@ export default class ProductsManagement extends Vue {
       { text: "Группа", value: "category_name" },
       { text: "Название", value: "product_name" },
     ];
+  }
+
+  onClickOnRow(item: Product) {
+    this.$router.push({ name: "EditProduct", query: { productId: item.id.toString() } });
   }
 }
 </script>

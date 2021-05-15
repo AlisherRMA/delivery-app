@@ -1,6 +1,6 @@
 import { Api } from "@/services/api.service";
 // import { ProductGroups } from "../@types/product.type";
-import { Category } from "../../dishes/@types/product.type";
+import { Category, Product } from "../../dishes/@types/product.type";
 
 export class ProductsManagementService {
   static async getProducts() {
@@ -8,8 +8,18 @@ export class ProductsManagementService {
     return response.data;
   }
 
+  static async getProductById(id: string | number) {
+    const response = await Api.get(`/api/products/row/${id}`);
+    return response.data;
+  }
+
   static async getGroups() {
     const response = await Api.get("/api/products/groups");
+    return response.data;
+  }
+
+  static async updateProduct(payload: Product) {
+    const response = await Api.put("/api/products/", payload);
     return response.data;
   }
 

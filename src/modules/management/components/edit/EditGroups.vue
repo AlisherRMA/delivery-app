@@ -14,10 +14,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 import { Category } from "@/modules/dishes/@types/product.type";
 import FormValidator from "@/mixins/FormValidator";
-import { wait } from "@/utils";
 
 @Component
 export default class EditGroups extends FormValidator {
