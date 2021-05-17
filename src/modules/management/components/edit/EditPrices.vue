@@ -108,8 +108,6 @@ export default class EditPrices extends Vue {
   }
 
   onPricesAddedToNewProduct(item: ProductPriceBase) {
-    console.log(item);
-
     this.prices.push(item);
   }
 
