@@ -24,6 +24,7 @@ export interface ProductPrice {
   /** скидка */
   discount: number;
   userSelectionCount: number;
+  is_default: 0 | 1;
 }
 
 export interface ProductGroups {

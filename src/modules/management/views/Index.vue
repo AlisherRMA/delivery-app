@@ -5,7 +5,7 @@
     </v-tabs>
 
     <v-tabs-items v-model="tab">
-      <v-tab-item> <ProductsManagement :products="products" /> </v-tab-item>
+      <v-tab-item> <ProductsManagement :products="products" @onProductsUpdated="onProductsUpdated" /> </v-tab-item>
       <v-tab-item> <GroupsManagement :groups="groups" @onGroupsUpdated="onGroupsUpdated" /> </v-tab-item>
     </v-tabs-items>
   </div>
@@ -33,12 +33,20 @@ export default class Management extends Vue {
   async mounted() {
     // if (!this.productsGroups?.length) await BasketModule.getProductsList();
     // console.log(this.productsGroups);
-    this.products = await ProductsManagementService.getProducts();
+    await this.getProducts();
     await this.getGroups();
   }
 
   onGroupsUpdated() {
     this.getGroups();
+  }
+
+  async onProductsUpdated() {
+    await this.getProducts();
+  }
+
+  async getProducts() {
+    this.products = await ProductsManagementService.getProducts();
   }
 
   async getGroups() {

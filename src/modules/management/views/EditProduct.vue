@@ -2,6 +2,8 @@
   <section v-if="item">
     <div class="app-label-lg text-center mt-4">Редактирование товара</div>
     <v-card class="pa-4 mx-auto" max-width="600">
+      <label class="app-label-md lightBlue--text">Группа товара</label>
+      <v-select :items="groups" item-text="name" class="pt-0 mt-0" item-value="category_id" v-model="item.category_id"></v-select>
       <v-divider></v-divider>
       <div>
         <label class="app-label-md lightBlue--text">Название товара</label>
@@ -19,7 +21,7 @@
           <v-textarea label="Вставьте ссылку на изображение" v-model="tempImgLink" :autofocus="isImgEditing" rows="1"></v-textarea>
           <v-img :src="tempImgLink" style="border-radius: 5px" max-width="250px" class="mx-auto"></v-img>
           <v-btn v-show="tempImgLink" color="primary" class="full-width mt-2" @click="onSaveImage">Применить</v-btn>
-          <v-btn v-show="tempImgLink" color="primary" outlined class="full-width mt-2" @click="(tempImgLink = null), (isImgEditing = false)">Отмена</v-btn>
+          <v-btn color="primary" outlined class="full-width mt-2" @click="(tempImgLink = null), (isImgEditing = false)">Отмена</v-btn>
         </div>
       </div>
 
@@ -43,7 +45,7 @@
       <v-divider class="mt-2"></v-divider>
       <div>
         <label class="app-label-md lightBlue--text">Граммаж</label>
-        <div>{{ item.description }}</div>
+        <EditPrices :isNew="isNew" :prices="prices" @onPricesUpdated="onPricesUpdated" :productId="productId" />
       </div>
 
       <v-btn v-show="tempDesc && tempDesc !== `<p>${item.description}</p>`" color="primary" class="full-width mt-2" @click="onSaveProduct">
@@ -54,16 +56,19 @@
 </template>
 
 <script lang="ts">
-import { Product } from "@/modules/dishes/@types/product.type";
+import { Product, ProductPrice } from "@/modules/dishes/@types/product.type";
 import { Component, Vue } from "vue-property-decorator";
 import { ProductsManagementService } from "../api/products-management.service";
+import { ProductPriceBase } from "../@types/product-price.type";
 
 import TextEditor from "@/components/ui/TextEditor.vue";
 import ReadMore from "@/components/ui/ReadMore.vue";
+import EditPrices from "../components/edit/EditPrices.vue";
 
-@Component({ components: { TextEditor, ReadMore } })
+@Component({ components: { TextEditor, ReadMore, EditPrices } })
 export default class extends Vue {
   id: Nullable<string> = null;
+  isNew = false;
   item: Nullable<Product> = null;
 
   isImgEditing = false;
@@ -72,10 +77,56 @@ export default class extends Vue {
   isDescEditing = false;
   tempDesc: Nullable<string> = null;
 
+  prices: ProductPriceBase[] = [];
+
+  groups: any[] = [];
+
   async mounted() {
+    this.init();
+
+    if (!this.isNew && this.id) this.getProduct();
+
+    this.getGroups();
+  }
+
+  init() {
     this.id = this.$route.query.productId as string;
-    this.item = await ProductsManagementService.getProductById(this.id);
+    this.isNew = this.$route.query.isNew == "true";
+
+    if (this.isNew) {
+      this.item = {
+        category_id: (null as unknown) as number,
+        category_name: (null as unknown) as string,
+        description: undefined,
+        id: (null as unknown) as number,
+        image_link: (null as unknown) as string,
+        product_name: (null as unknown) as string,
+        prices: [],
+        overallUserSelectionCount: 0,
+      };
+    }
+  }
+
+  async getProduct() {
+    this.item = await ProductsManagementService.getProductById(this.id as string);
     this.tempDesc = this.item?.description as string;
+    await this.getPrices();
+  }
+
+  async getPrices() {
+    this.prices = await ProductsManagementService.getProductsPrices(this.id as string);
+  }
+
+  async getGroups() {
+    this.groups = await ProductsManagementService.getGroups();
+  }
+
+  get productId() {
+    return this.item?.id;
+  }
+
+  onPricesUpdated() {
+    this.getPrices();
   }
 
   onSaveImage() {
@@ -89,7 +140,12 @@ export default class extends Vue {
   }
 
   async onSaveProduct() {
-    await ProductsManagementService.updateProduct(this.item as Product);
+    if (this.isNew && this.item) {
+      this.item.prices = (this.prices as unknown) as ProductPrice[];
+      await ProductsManagementService.createProduct(this.item);
+    } else await ProductsManagementService.updateProduct(this.item as Product);
+
+    // this.$router.push({ name: "Management" });
   }
 }
 </script>

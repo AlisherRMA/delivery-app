@@ -19,7 +19,7 @@
     <v-img id="header-img" src="@/assets/images/navbar_image.jpg" height="20vh"> </v-img>
     <div id="contacts">
       <div class="text-center my-4">
-        <h1>Ёж Принёс</h1>
+        <h1 @click="$router.push('/')">Ёж Принёс</h1>
         <p>Мед, Малина, Варенье, Витамины, Орехи в меду, подарки</p>
       </div>
       <div class="my-4 d-flex justify-center">

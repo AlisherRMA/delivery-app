@@ -2,7 +2,7 @@
   <div>
     <p>
       <span v-html="formattedString"> </span>
-      <span v-show="text.length > maxChars">
+      <span v-show="text && text.length > maxChars">
         <v-tooltip bottom open-delay="500">
           <template #activator="{ on, attrs }">
             <button v-bind="attrs" v-on="on" v-if="!isReadMore" @click="isReadMore = true">

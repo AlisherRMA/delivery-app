@@ -13,6 +13,7 @@
             <span v-if="product.overallUserSelectionCount" class="primary--text">{{ product.overallUserSelectionCount }}x</span> {{ product.product_name }}
           </p>
           <div class="dish__description"><ReadMore :text="product.description || ''" :maxChars="isExpanded ? 9999 : 60" /></div>
+          <div class="lightBlue--text app-label-sm" v-if="defaultPrice">{{ defaultPrice }} ₸</div>
         </div>
       </v-col>
       <v-col cols="5" v-show="!isExpanded">
@@ -76,6 +77,17 @@ export default class extends Vue {
   set isExpanded(_val) {
     if (this.expandedItems.includes(this.product.id)) BasketModule.clearExpandedItems();
     else BasketModule.setExpandedItems(this.product.id);
+  }
+
+  get defaultPrice() {
+    if (this.product.prices.length) {
+      const price = this.product.prices.find(price => price.is_default === 1);
+      // if there's default price
+      if (price && price.id) return price.price;
+      // otherwise return 1st as default
+      else return this.product.prices[0].price;
+    }
+    return null;
   }
 
   // FUNCTIONAL
