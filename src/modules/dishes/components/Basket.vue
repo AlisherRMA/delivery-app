@@ -83,6 +83,8 @@ import { Product, ProductPrice } from "../@types/product.type";
 
 import ConfirmOrder from "./ConfirmOrder.vue";
 import { UserContactsDto } from "../@types/order.dto";
+import { log } from "node:console";
+import { ProductsService } from "../api/products.service";
 
 @Component({ components: { ConfirmOrder } })
 export default class BasketDialog extends Vue {
@@ -136,8 +138,11 @@ export default class BasketDialog extends Vue {
     product.overallUserSelectionCount--;
   }
   // eslint-disable-next-line
-  onConfirm(_payload: UserContactsDto) {
+  async onConfirm(userContacts: UserContactsDto) {
+    await ProductsService.sendOrder({ totalCount: this.overallPrice, items: this.selectedItems }, userContacts);
+
     this.onNextStep();
+
     // console.log(payload);
 
     // this.hideDialog();

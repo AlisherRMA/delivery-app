@@ -6,7 +6,7 @@
     @input="handleInput"
     @blur="setLegend"
     @keyup.enter="$emit('enter')"
-    placeholder="+7(7XX)-XXX-XXXX"
+    placeholder="+7(XXX)-XXX-XXXX"
     autocomplete="off"
     v-bind="$attrs"
     validate-on-blur
@@ -48,7 +48,7 @@ export default class extends Vue {
     const input: NullableElement = this.$el.querySelector(".v-text-field__slot input");
     if (!input) return;
     Inputmask({
-      regex: String.raw`^\+7\(7\d{2}\)-\d{3}-\d{4}$`,
+      regex: String.raw`^\+7\(\d{3}\)-\d{3}-\d{4}$`,
       autoUnmask: true,
       onUnMask: function(maskedValue: string) {
         return maskedValue.replace(/[()-]/g, "");
@@ -61,7 +61,7 @@ export default class extends Vue {
         }
         if (pastedValue.length > MIN_PHONE_LENGTH) {
           const cut = pastedValue.substring(pastedValue.length - MIN_PHONE_LENGTH);
-          vm.$emit("input", `+77${cut}`);
+          vm.$emit("input", `+7${cut}`);
           return cut;
         } else {
           return pastedValue;

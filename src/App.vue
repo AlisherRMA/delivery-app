@@ -24,5 +24,9 @@ import { Component, Vue } from "vue-property-decorator";
     AppFooter,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  mounted() {
+    console.log(process.env);
+  }
+}
 </script>
