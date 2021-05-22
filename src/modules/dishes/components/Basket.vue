@@ -83,7 +83,6 @@ import { Product, ProductPrice } from "../@types/product.type";
 
 import ConfirmOrder from "./ConfirmOrder.vue";
 import { UserContactsDto } from "../@types/order.dto";
-import { log } from "node:console";
 import { ProductsService } from "../api/products.service";
 
 @Component({ components: { ConfirmOrder } })
