@@ -1,5 +1,5 @@
 <template>
-  <section id="app-header-main" v-if="isHeaderVisible">
+  <section id="app-header-main" v-if="isHeaderVisible" style="background-color: #f2f2f2;">
     <v-app-bar :color="isDesktopSidebarVisible ? 'primary' : 'transparent'" style="z-index: 16" fixed dense flat>
       <v-spacer></v-spacer>
 

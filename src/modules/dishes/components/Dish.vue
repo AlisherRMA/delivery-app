@@ -1,23 +1,30 @@
 <template>
-  <v-card class="mx-auto" max-width="800">
+  <div class="mx-auto" max-width="800">
     <v-expand-transition>
       <div v-show="isExpanded" class="pointer expanded-image-container" @click="isExpanded = !isExpanded">
-        <v-img :src="product.image_link" height="250px" style="border-top-left-radius:5px; border-top-right-radius:5px;"></v-img>
+        <v-img :src="product.image_link" max-width="780px" height="250px" style="border-top-left-radius:5px; border-top-right-radius:5px;"></v-img>
       </div>
     </v-expand-transition>
 
-    <section class="d-flex dish pointer" v-ripple :class="{ left_border: product.overallUserSelectionCount > 0 }" @click="isExpanded = !isExpanded">
-      <v-col :cols="isExpanded ? 12 : 7">
-        <div class="d-flex flex-column dish__info ml-3">
+    <v-divider></v-divider>
+
+    <section
+      class="d-flex dish pointer align-center"
+      v-ripple
+      :class="{ left_border: product.overallUserSelectionCount > 0 }"
+      @click="isExpanded = !isExpanded"
+    >
+      <v-col :cols="isExpanded ? 12 : 9" class="px-0">
+        <div class="d-flex flex-column dish__info ml-3" style="min-height: 70px;">
           <p class="app-label-md bold">
             <span v-if="product.overallUserSelectionCount" class="primary--text">{{ product.overallUserSelectionCount }}x</span> {{ product.product_name }}
           </p>
-          <div class="dish__description"><ReadMore :text="product.description || ''" :maxChars="isExpanded ? 9999 : 60" /></div>
+          <div class="dish__description"><ReadMore :text="product.description || ''" :maxChars="isExpanded ? 9999 : 100" class="darkGrey--text" /></div>
           <div class="lightBlue--text app-label-sm" v-if="defaultPrice">{{ defaultPrice }} ₸</div>
         </div>
       </v-col>
-      <v-col cols="5" v-show="!isExpanded">
-        <div class="dish__image-container" v-show="!isExpanded">
+      <v-col cols="3" class="px-0 pt-0" v-show="!isExpanded">
+        <div class="dish__image-container d-flex align-center" v-show="!isExpanded">
           <v-img :src="product.image_link" max-height="100%"></v-img>
         </div>
       </v-col>
@@ -27,7 +34,7 @@
       <div v-show="isExpanded">
         <v-divider></v-divider>
         <div v-for="(price, i) in product.prices" :key="i">
-          <div class="pa-4 d-flex justify-space-between align-center">
+          <div class="d-flex justify-space-between align-center">
             <v-col cols="4" class="d-flex pr-0">
               <div class="app-label-sm"><span class="bold">Вес</span>: {{ price.weight }} гр</div>
             </v-col>
@@ -53,7 +60,7 @@
         </v-card-text>
       </div>
     </v-expand-transition>
-  </v-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -122,7 +129,7 @@ export default class extends Vue {
     margin-left: auto;
 
     @include respond(phone) {
-      max-width: 60px;
+      max-width: 90px;
       max-height: 50px;
     }
 
@@ -142,7 +149,12 @@ export default class extends Vue {
 
 .expanded-image-container {
   @include respond(phone) {
-    max-width: 96vw;
+    max-width: 95vw;
   }
+}
+
+.expand-transition-enter-active,
+.expand-transition-leave-active {
+  transition-duration: 0.6s !important;
 }
 </style>

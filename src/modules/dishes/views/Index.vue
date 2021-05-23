@@ -1,14 +1,14 @@
 <template>
   <section id="items_section">
-    <SidebarMobile v-if="isMobile" :groups="productGroups" />
+    <SidebarMobile :groups="productGroups" />
     <div class="d-flex align-center justify-center full-width" :class="{ 'scroll-margin': isMobile }">
       <div class="dish-groups-wrapper">
-        <div class="sidebar" v-if="!isMobile"><Sidebar :groups="productGroups" /></div>
+        <!-- <div class="sidebar" v-if="!isMobile"><Sidebar :groups="productGroups" /></div> -->
         <div class="dish-groups">
           <div v-for="(group, i) in productGroups" :key="i" :id="group.identificator">
             <div class="text-center app-label-lg bold">{{ group.groupTitle }}</div>
             <div v-for="(dish, index) in group.products" :key="index" class="mx-2">
-              <Dish :product="dish" class="my-4" />
+              <Dish :product="dish" class="my-0" />
             </div>
           </div>
         </div>

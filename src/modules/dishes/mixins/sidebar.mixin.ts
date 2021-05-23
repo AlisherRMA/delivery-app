@@ -20,6 +20,7 @@ export default class SidebarMixin extends Vue {
     if (!group.identificator) return;
     let position = document.getElementById(group.identificator)?.offsetTop;
     if (this.isMobile && position) position += 190;
+    else if (!this.isMobile && position) position += 220;
 
     // smooth scroll
     window.scrollTo({ top: position, behavior: "smooth" });

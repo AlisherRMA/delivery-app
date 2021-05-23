@@ -19,6 +19,7 @@ export default new Vuetify({
         primary: "#f14635",
         secondary: "#4b878bff",
         lightBlue: "#009de0",
+        darkGrey: "#999999",
       },
     },
     options: {
