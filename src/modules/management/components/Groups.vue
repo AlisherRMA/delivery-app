@@ -12,8 +12,6 @@
       </template>
     </v-data-table>
 
-    <TextEditor />
-
     <EditGroups ref="editGroupsRef" :isNew="false" @onGroupEdited="onGroupEdited" />
     <AddGroups ref="addGroupsRef" :isNew="true" @onGroupAdded="onGroupAdded" />
     <ConfirmDialog
@@ -32,9 +30,8 @@ import EditGroups from "./edit/EditGroups.vue";
 import AddGroups from "./edit/EditGroups.vue";
 import { ProductsManagementService } from "../api/products-management.service";
 import ConfirmDialog from "@/components/ui/dialogs/ConfirmDialog.vue";
-import TextEditor from "@/components/ui/TextEditor.vue";
 
-@Component({ components: { EditGroups, AddGroups, ConfirmDialog, TextEditor } })
+@Component({ components: { EditGroups, AddGroups, ConfirmDialog } })
 export default class GroupsManagement extends Vue {
   @Prop()
   readonly groups;

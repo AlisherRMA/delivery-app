@@ -6,6 +6,8 @@ export interface UserContactsDto {
   city: string;
   alternativeCity?: string;
   address: string;
+  priceForSelectedCity: number;
+  priceWithDelivery: number;
 }
 
 export interface UserSelectionDto {

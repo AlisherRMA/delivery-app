@@ -4,10 +4,21 @@
     <v-form ref="formRef" v-model="isFormValid">
       <v-text-field label="Имя" v-model="name" placeholder="Как мы можем к Вам обращаться?" :rules="[rules.required]"></v-text-field>
       <phone-mask-vue v-model="mobileNumber" :rules="[rules.required]" />
-      <v-autocomplete label="Выберите город" v-model="city" :items="cities" class="mt-0 pt-0" :rules="[rules.required]"></v-autocomplete>
+      <v-autocomplete
+        label="Выберите город"
+        v-model="city"
+        :items="cities"
+        item-value="name"
+        item-text="name"
+        class="mt-0 pt-0"
+        :rules="[rules.required]"
+      ></v-autocomplete>
       <v-text-field v-if="city === 'Другое'" label="Введите название города" class="mt-0 pt-0" v-model="alternativeCity"></v-text-field>
       <v-textarea rows="2" label="Адрес" v-model="address" :rules="[rules.required]"></v-textarea>
-      <v-btn class="full-width" :disabled="!isFormValid" color="primary" @click="onNextStep">Подтвердить заказ</v-btn>
+
+      <div v-if="priceForSelectedCity" class="app-label-md text-end bold"><span>Стоимость доставки: </span>{{ priceForSelectedCity }} ₸</div>
+      <div v-if="priceForSelectedCity" class="app-label-md text-end bold lightBlue--text"><span>Итого: </span>{{ priceWithDelivery }} ₸</div>
+      <v-btn class="full-width mt-3" :disabled="!isFormValid" color="primary" @click="onNextStep">Подтвердить заказ</v-btn>
     </v-form>
   </section>
 </template>
@@ -19,6 +30,8 @@ import PhoneMaskVue from "@/components/ui/masks/PhoneMask.vue";
 import FormValidator from "@/mixins/FormValidator";
 
 import { UserContactsDto } from "../@types/order.dto";
+import { CitiesModule } from "../store/cities.module";
+import { BasketModule } from "../store/basket.module";
 
 @Component({ components: { PhoneMaskVue } })
 export default class ConfirmOrder extends FormValidator {
@@ -32,32 +45,23 @@ export default class ConfirmOrder extends FormValidator {
 
   formRef = "formRef";
 
+  async mounted() {
+    if (!this.cities) await CitiesModule.getCities();
+  }
+
   get cities() {
-    return [
-      "Алматы",
-      "Нур-Султан",
-      "Шыкмент",
-      "Актобе",
-      "Караганда",
-      "Тараз",
-      "Павлодар",
-      "Семей",
-      "Усть-Каменогорск",
-      "Кызылорда",
-      "Уральск",
-      "Костанай",
-      "Атырау",
-      "Петропавловск",
-      "Актау",
-      "Темиртау",
-      "Кокшетау",
-      "Туркестан",
-      "Экибастуз",
-      "Талдыкорган",
-      "Рудный",
-      "Жанаозен",
-      "Другое",
-    ];
+    return CitiesModule.cities;
+  }
+
+  get priceForSelectedCity() {
+    if (!this.city) return null;
+    const city = this.cities.find(currentCity => currentCity.name == this.city);
+    return city?.delivery_price;
+  }
+
+  get priceWithDelivery() {
+    if (!this.priceForSelectedCity) return null;
+    return BasketModule.overallPrice + this.priceForSelectedCity;
   }
 
   get payload(): UserContactsDto {
@@ -66,6 +70,8 @@ export default class ConfirmOrder extends FormValidator {
       mobileNumber: this.mobileNumber,
       city: this.alternativeCity ? this.alternativeCity : this.city,
       address: this.address,
+      priceForSelectedCity: this.priceForSelectedCity as number,
+      priceWithDelivery: this.priceWithDelivery as number,
     };
   }
 

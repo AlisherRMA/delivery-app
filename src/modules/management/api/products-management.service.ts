@@ -68,4 +68,9 @@ export class ProductsManagementService {
     const response = await Api.delete(`/api/products/price`, { params: { priceId } });
     return response.data;
   }
+
+  static async updateCity(payload) {
+    const response = await Api.post(`/api/products/city`, payload);
+    return response.data;
+  }
 }

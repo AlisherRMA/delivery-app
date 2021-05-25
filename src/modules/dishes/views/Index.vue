@@ -29,7 +29,9 @@ import BasketSnackbar from "../components/Snackbar.vue";
 import { IDishGroup } from "../@types/dish.type";
 import { dishesHardcodedList } from "../utils/dishesList";
 import { BasketModule } from "../store/basket.module";
+import { CitiesModule } from "../store/cities.module";
 import SidebarMixin from "../mixins/sidebar.mixin";
+import { WithLoadingAnimation } from "@/utils/decorators";
 
 @Component({ components: { Dish, Sidebar, SidebarMobile, BasketSnackbar } })
 export default class ProductGroupsIndexView extends SidebarMixin {
@@ -75,8 +77,10 @@ export default class ProductGroupsIndexView extends SidebarMixin {
     this.$refs.basketSnackbarRef.showBasketSnackbar();
   }
 
+  @WithLoadingAnimation
   async mounted() {
     await BasketModule.getProductsList();
+    await CitiesModule.getCities();
   }
 }
 </script>

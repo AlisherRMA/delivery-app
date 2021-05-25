@@ -84,6 +84,7 @@ import { Product, ProductPrice } from "../@types/product.type";
 import ConfirmOrder from "./ConfirmOrder.vue";
 import { UserContactsDto } from "../@types/order.dto";
 import { ProductsService } from "../api/products.service";
+import { WithLoadingAnimation } from "@/utils/decorators";
 
 @Component({ components: { ConfirmOrder } })
 export default class BasketDialog extends Vue {
@@ -113,7 +114,13 @@ export default class BasketDialog extends Vue {
   async show() {
     this.isDialogVisible = true;
   }
-  onCancel() {
+
+  @WithLoadingAnimation
+  async onCancel() {
+    if (this.step === 3) {
+      return window.location.reload();
+    }
+
     this.hideDialog();
   }
   hideDialog() {

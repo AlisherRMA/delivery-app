@@ -7,6 +7,7 @@
     <v-tabs-items v-model="tab">
       <v-tab-item> <ProductsManagement :products="products" @onProductsUpdated="onProductsUpdated" /> </v-tab-item>
       <v-tab-item> <GroupsManagement :groups="groups" @onGroupsUpdated="onGroupsUpdated" /> </v-tab-item>
+      <v-tab-item> <Cities :cities="cities" @onCitiesUpdated="onCitiesUpdated" /> </v-tab-item>
     </v-tabs-items>
   </div>
 </template>
@@ -16,15 +17,17 @@ import { Component, Vue } from "vue-property-decorator";
 
 import GroupsManagement from "../components/Groups.vue";
 import ProductsManagement from "../components/Products.vue";
+import Cities from "../components/Cities.vue";
+
 import { ProductsManagementService } from "../api/products-management.service";
 import { Product } from "@/modules/dishes/@types/product.type";
-import TiptapVue from "@/components/ui/Tiptap.vue";
+import { CitiesModule } from "@/modules/dishes/store/cities.module";
 
-@Component({ components: { GroupsManagement, ProductsManagement, TiptapVue } })
+@Component({ components: { GroupsManagement, ProductsManagement, Cities } })
 export default class Management extends Vue {
   tab = 0;
   get tabs() {
-    return ["Товары", "Группы"];
+    return ["Товары", "Группы", "Доставка"];
   }
 
   products: Product[] = [];
@@ -35,6 +38,7 @@ export default class Management extends Vue {
     // console.log(this.productsGroups);
     await this.getProducts();
     await this.getGroups();
+    await this.getCities();
   }
 
   onGroupsUpdated() {
@@ -45,12 +49,24 @@ export default class Management extends Vue {
     await this.getProducts();
   }
 
+  async onCitiesUpdated() {
+    await this.getCities();
+  }
+
   async getProducts() {
     this.products = await ProductsManagementService.getProducts();
   }
 
   async getGroups() {
     this.groups = await ProductsManagementService.getGroups();
+  }
+
+  async getCities() {
+    await CitiesModule.getCities();
+  }
+
+  get cities() {
+    return CitiesModule.cities;
   }
 }
 </script>
