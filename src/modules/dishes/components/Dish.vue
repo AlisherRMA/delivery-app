@@ -14,13 +14,16 @@
       :class="{ left_border: product.overallUserSelectionCount > 0 }"
       @click="isExpanded = !isExpanded"
     >
-      <v-col :cols="isExpanded ? 12 : 9" class="px-0">
+      <v-col :cols="isExpanded ? 12 : 9" class="px-0 pb-0">
         <div class="d-flex flex-column dish__info ml-3" style="min-height: 70px;">
           <p class="app-label-md bold">
             <span v-if="product.overallUserSelectionCount" class="primary--text">{{ product.overallUserSelectionCount }}x</span> {{ product.product_name }}
           </p>
           <div class="dish__description"><ReadMore :text="product.description || ''" :maxChars="isExpanded ? 9999 : 100" class="darkGrey--text" /></div>
-          <div class="lightBlue--text app-label-sm" v-if="defaultPrice">{{ defaultPrice }} ₸</div>
+          <div class="d-flex" v-if="defaultPrice">
+            <div class="lightBlue--text app-label-sm">{{ defaultPrice }} ₸</div>
+            <v-icon :class="{ rotate: isExpanded }" class="mx-auto">mdi-chevron-down</v-icon>
+          </div>
         </div>
       </v-col>
       <v-col cols="3" class="px-0 pt-0" v-show="!isExpanded">
@@ -58,6 +61,7 @@
         <v-card-text v-if="product.detailedDescription">
           <div v-html="product.detailedDescription"></div>
         </v-card-text>
+        <div class="pb-6"></div>
       </div>
     </v-expand-transition>
   </div>

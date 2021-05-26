@@ -44,8 +44,8 @@
                 </div>
               </div>
               <!-- OVERALL PRICE -->
-              <div class="d-flex pa-1 mx-2 lightBlue">
-                <span class="ml-auto app-label-sm bold white--text">Итого: {{ overallPrice }}₸</span>
+              <div class="d-flex pa-1 mx-2 ">
+                <span class="ml-auto app-label-sm bold lightBlue--text">Итого: {{ overallPrice }}₸</span>
               </div>
             </section>
             <section v-else class="text-center app-label-md">
@@ -53,8 +53,8 @@
             </section>
 
             <v-card-actions class="d-flex flex-column">
-              <v-btn class="full-width " color="primary" @click="onNextStep">Оформить заказ</v-btn>
-              <v-btn class="full-width ml-0 mt-3" outlined @click="onCancel">Отмена</v-btn>
+              <v-btn class="full-width " color="primary" @click="onNextStep">Отправить заказ менеджеру</v-btn>
+              <v-btn class="full-width ml-0 mt-3" outlined @click="onCancel">Вернуться в прайс</v-btn>
             </v-card-actions>
           </aside>
           <!-- STEP 2 -->

@@ -19,7 +19,8 @@
     <v-img id="header-img" src="@/assets/images/navbar_image.jpg" height="20vh"> </v-img>
     <div id="contacts">
       <div class="text-center my-4">
-        <h1 @click="$router.push('/')">Ёж Принёс</h1>
+        <!-- <h1 >Ёж Принёс</h1> -->
+        <v-img @click="$router.push('/')" src="@/assets/images/logo.png" width="160" class="mx-auto pointer"></v-img>
         <p>Мед, Малина, Варенье, Витамины, Орехи в меду, подарки</p>
       </div>
       <div class="my-4 d-flex justify-center">
@@ -125,6 +126,6 @@ export default class AppNavbar extends Vue {
 }
 
 #header-img {
-  filter: opacity(60%) contrast(150%);
+  // filter: opacity(60%) contrast(150%);
 }
 </style>

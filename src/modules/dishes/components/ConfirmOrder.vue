@@ -18,7 +18,7 @@
 
       <div v-if="priceForSelectedCity" class="app-label-md text-end bold"><span>Стоимость доставки: </span>{{ priceForSelectedCity }} ₸</div>
       <div v-if="priceForSelectedCity" class="app-label-md text-end bold lightBlue--text"><span>Итого: </span>{{ priceWithDelivery }} ₸</div>
-      <v-btn class="full-width mt-3" :disabled="!isFormValid" color="primary" @click="onNextStep">Подтвердить заказ</v-btn>
+      <v-btn class="full-width mt-3" :disabled="!isFormValid" color="primary" @click="onNextStep">Отправить заказ менеджеру</v-btn>
     </v-form>
   </section>
 </template>
