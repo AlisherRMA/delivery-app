@@ -103,7 +103,6 @@ export default class ConfirmOrder extends FormValidator {
 
   onNextStep() {
     if (!this.validateForm()) return;
-    console.log(this.payload);
 
     this.$emit("onConfirm", this.payload);
   }
