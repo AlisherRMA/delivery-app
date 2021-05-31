@@ -53,7 +53,7 @@
             </section>
 
             <v-card-actions class="d-flex flex-column">
-              <v-btn class="full-width " color="primary" @click="onNextStep">Отправить заказ менеджеру</v-btn>
+              <v-btn class="full-width " color="primary" @click="onNextStep">Указать куда доставить</v-btn>
               <v-btn class="full-width ml-0 mt-3" outlined @click="onCancel">Вернуться в прайс</v-btn>
             </v-card-actions>
           </aside>

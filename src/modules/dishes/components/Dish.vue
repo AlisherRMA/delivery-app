@@ -15,7 +15,7 @@
       @click="isExpanded = !isExpanded"
     >
       <v-col :cols="isExpanded ? 12 : 9" class="px-0 pb-0">
-        <div class="d-flex flex-column dish__info ml-3" style="min-height: 70px;">
+        <div class="d-flex flex-column dish__info ml-3" style="min-height: 85px;">
           <p class="app-label-md bold">
             <span v-if="product.overallUserSelectionCount" class="primary--text">{{ product.overallUserSelectionCount }}x</span> {{ product.product_name }}
           </p>
@@ -139,6 +139,8 @@ export default class extends Vue {
 
     & > * {
       border-radius: 5px;
+      position: relative;
+      top: 5px;
     }
   }
 

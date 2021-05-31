@@ -14,7 +14,12 @@
         :rules="[rules.required]"
       ></v-autocomplete>
       <v-text-field v-if="city === 'Другое'" label="Введите название города" class="mt-0 pt-0" v-model="alternativeCity"></v-text-field>
-      <v-textarea rows="2" label="Адрес" v-model="address" :rules="[rules.required]"></v-textarea>
+      <v-textarea
+        rows="2"
+        placeholder="Введите адрес доставки (город, дом, этаж, квартира) и любые примечания"
+        v-model="address"
+        :rules="[rules.required]"
+      ></v-textarea>
 
       <div v-if="priceForSelectedCity" class="app-label-md text-end bold"><span>Стоимость доставки: </span>{{ priceForSelectedCity }} ₸</div>
       <div v-if="priceForSelectedCity" class="app-label-md text-end bold lightBlue--text"><span>Итого: </span>{{ priceWithDelivery }} ₸</div>

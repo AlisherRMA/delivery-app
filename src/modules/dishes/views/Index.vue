@@ -92,7 +92,7 @@ export default class ProductGroupsIndexView extends SidebarMixin {
 
 .dish-groups-wrapper {
   display: flex;
-  max-width: 1100px;
+  max-width: 800px;
   justify-content: center;
 
   @include respond(phone) {
