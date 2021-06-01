@@ -36,7 +36,6 @@
 </template>
 
 <script lang="ts">
-import LanguageChanger from "@/components/ui/LanguageChanger.vue";
 import { Component, Vue } from "vue-property-decorator";
 
 import { BasketModule } from "@/modules/dishes/store/basket.module";
@@ -46,7 +45,7 @@ import Basket from "@/modules/dishes/components/Basket.vue";
 
 @Component({
   name: "AppHeader",
-  components: { LanguageChanger, Basket },
+  components: { Basket },
 })
 export default class AppNavbar extends Vue {
   get isHeaderVisible() {

@@ -31,11 +31,10 @@ import { Product } from "@/modules/dishes/@types/product.type";
 import { DataTableHeader } from "vuetify/types";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import ExpansionPanel from "../../../components/ui/ExpansionPanel.vue";
 import ConfirmDialog from "@/components/ui/dialogs/ConfirmDialog.vue";
 import { ProductsManagementService } from "../api/products-management.service";
 
-@Component({ components: { ExpansionPanel, ConfirmDialog } })
+@Component({ components: { ConfirmDialog } })
 export default class ProductsManagement extends Vue {
   @Prop()
   private products: Product[];

@@ -14,8 +14,6 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@tiptap/starter-kit": "^2.0.0-beta.51",
-    "@tiptap/vue-2": "^2.0.0-beta.27",
     "axios": "^0.21.1",
     "connect-history-api-fallback": "^1.6.0",
     "express": "^4.17.1",

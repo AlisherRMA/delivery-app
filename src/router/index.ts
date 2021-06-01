@@ -16,16 +16,6 @@ Vue.use(VueRouter);
 export const routes: RouteConfig[] = [
   { path: "/", name: "ItemsList", component: () => import("../modules/dishes/views/Index.vue") },
   { path: "/signin", name: "Signin", component: () => import("../modules/auth/views/Index.vue") },
-  // {
-  //   path: "/managementing/edit",
-  //   name: "EditProduct3",
-  //   component: () => import("../modules/management/views/EditProduct.vue"),
-  //   meta: {
-  //     protected: true,
-  //   },
-  //   // props: true,
-  // },
-
   {
     path: "/management",
     name: "Management",
@@ -33,9 +23,6 @@ export const routes: RouteConfig[] = [
     meta: {
       protected: true,
     },
-    // children: [
-
-    // ],
   },
   {
     path: "/edit",
@@ -46,7 +33,6 @@ export const routes: RouteConfig[] = [
 
 const router = new VueRouter({
   mode: "history",
-  // base: process.env.BASE_URL,
   routes,
 });
 
