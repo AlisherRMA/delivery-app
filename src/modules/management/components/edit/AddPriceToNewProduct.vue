@@ -1,8 +1,6 @@
 <template>
   <v-dialog v-model="isVisible" max-width="600">
     <v-card class="pa-4" v-if="item">
-      NOVAYA
-      {{ isEditMode }}
       <v-text-field label="Цена" type="number" v-model.number="item.price" autocomplete="off"></v-text-field>
       <v-text-field label="Вес" type="number" v-model.number="item.weight" autocomplete="off"></v-text-field>
       <v-switch
@@ -12,8 +10,6 @@
         :persistent-hint="cannotSetDefaultPrice"
         label="Является основной ценой"
       ></v-switch>
-
-      {{ item }}
 
       <v-btn class="full-width my-2" color="primary" @click="onSubmit">Применить</v-btn>
       <v-btn class="full-width" @click="onClose" color="primary" outlined>Отмена</v-btn>

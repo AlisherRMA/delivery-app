@@ -24,6 +24,13 @@ Vue.filter("formatDate", function(value: Date) {
   }
 });
 
+Vue.filter("formatWeight", function(value: number) {
+  if (value) {
+    if (value >= 1000) return (value / 1000).toFixed(2) + " кг.";
+    else return value + " гр";
+  }
+});
+
 Vue.filter("formatMobileNumber", function(v: string) {
   if (v) {
     return `${v.substr(0, 2)}(${v.substr(2, 3)})-${v.substr(5, 3)}-${v.substr(8, 4)}`;

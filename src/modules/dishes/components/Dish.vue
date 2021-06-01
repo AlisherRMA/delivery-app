@@ -39,7 +39,7 @@
         <div v-for="(price, i) in product.prices" :key="i">
           <div class="d-flex justify-space-between align-center">
             <v-col cols="4" class="d-flex pr-0">
-              <div class="app-label-sm"><span class="bold">Вес</span>: {{ price.weight }} гр</div>
+              <div class="app-label-sm"><span class="bold">Вес</span>: {{ price.weight | formatWeight }}</div>
             </v-col>
             <v-col cols="2" class="px-0">
               <div class="app-label-sm lightBlue--text">{{ price.price }} ₸</div>
@@ -107,6 +107,7 @@ export default class extends Vue {
     this.product.prices[selectionIndex].userSelectionCount++;
   }
   onDecrmentCount(selectionIndex: number) {
+    if (this.product.prices[selectionIndex].userSelectionCount === 0) return;
     this.product.overallUserSelectionCount--;
     this.product.prices[selectionIndex].userSelectionCount--;
   }

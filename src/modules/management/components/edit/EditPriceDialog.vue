@@ -1,7 +1,6 @@
 <template>
   <v-dialog v-model="isVisible" max-width="600">
     <v-card class="pa-4" v-if="item">
-      STARAYA
       <v-text-field label="Цена" type="number" v-model.number="item.price"></v-text-field>
       <v-text-field label="Вес" type="number" v-model.number="item.weight"></v-text-field>
       <v-switch
