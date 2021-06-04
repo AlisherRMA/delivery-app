@@ -2,15 +2,33 @@
   <div>
     <div class="my-2 ml-1">
       <v-btn color="lightBlue" class="white--text" @click="showAddDialog">Создать новую группу</v-btn>
+      <v-btn color="lightBlue" class="white--text ml-2" @click="isEditOrderMode = true">Изменить порядок</v-btn>
     </div>
-    <v-data-table :headers="headers" :items="groups" mobile-breakpoint="md">
+
+    <v-data-table
+      :headers="headers"
+      :items="sortedArray"
+      mobile-breakpoint="md"
+      :footer-props="{
+        'items-per-page-options': [isEditOrderMode ? 100 : 10],
+      }"
+    >
       <template v-slot:[`item.name`]="{ item }">
         {{ item.name }}
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon @click="showEditDialog(item)">mdi-pencil</v-icon> <v-icon @click="showDeleteDialog(item)">mdi-delete</v-icon>
+        <v-icon @click="showEditDialog(item)" v-if="!isEditOrderMode">mdi-pencil</v-icon>
+        <v-icon @click="showDeleteDialog(item)" v-if="!isEditOrderMode">mdi-delete</v-icon>
+
+        <v-btn icon v-if="isEditOrderMode" @click="onOrderMovedToTheTop(item)"><v-icon>mdi-arrow-up</v-icon></v-btn>
+        <v-btn icon v-if="isEditOrderMode" @click="onOrderMovedToTheBottom(item)"><v-icon>mdi-arrow-down</v-icon></v-btn>
       </template>
     </v-data-table>
+
+    <div v-if="isEditOrderMode" class="mt-3">
+      <v-btn color="primary" class="px-10" @click="onSaveGroupsOrder">Сохранить</v-btn>
+      <v-btn color="primary" class="px-10 ml-3" outlined @click="isEditOrderMode = false">Отмена</v-btn>
+    </div>
 
     <EditGroups ref="editGroupsRef" :isNew="false" @onGroupEdited="onGroupEdited" />
     <AddGroups ref="addGroupsRef" :isNew="true" @onGroupAdded="onGroupAdded" />
@@ -34,7 +52,9 @@ import ConfirmDialog from "@/components/ui/dialogs/ConfirmDialog.vue";
 @Component({ components: { EditGroups, AddGroups, ConfirmDialog } })
 export default class GroupsManagement extends Vue {
   @Prop()
-  readonly groups;
+  readonly groups: Category[];
+
+  isEditOrderMode = false;
 
   $refs: {
     editGroupsRef: EditGroups;
@@ -72,6 +92,29 @@ export default class GroupsManagement extends Vue {
   async onGroupAdded(name: string) {
     await ProductsManagementService.addGroup(name);
     this.$emit("onGroupsUpdated");
+  }
+
+  get sortedArray() {
+    return this.groups.sort(({ group_sort_number: a }, { group_sort_number: b }) => (a as number) - (b as number));
+  }
+
+  onOrderMovedToTheTop(group: Category) {
+    if (group.group_sort_number! <= 1) return;
+
+    const swapableGroup = this.groups.find(iterable => iterable.group_sort_number === group.group_sort_number! - 1);
+    if (swapableGroup && swapableGroup.group_sort_number) swapableGroup.group_sort_number = group.group_sort_number;
+    if (group.group_sort_number) group.group_sort_number--;
+  }
+
+  onOrderMovedToTheBottom(group: Category) {
+    const swapableGroup = this.groups.find(iterable => iterable.group_sort_number === group.group_sort_number! + 1);
+    if (swapableGroup && swapableGroup.group_sort_number) swapableGroup.group_sort_number = group.group_sort_number;
+    if (group.group_sort_number) group.group_sort_number++;
+  }
+
+  async onSaveGroupsOrder() {
+    await ProductsManagementService.updateGroupsOrder(this.groups);
+    this.isEditOrderMode = false;
   }
 }
 </script>

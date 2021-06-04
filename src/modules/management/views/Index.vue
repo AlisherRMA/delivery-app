@@ -20,7 +20,7 @@ import ProductsManagement from "../components/Products.vue";
 import Cities from "../components/Cities.vue";
 
 import { ProductsManagementService } from "../api/products-management.service";
-import { Product } from "@/modules/dishes/@types/product.type";
+import { Category, Product } from "@/modules/dishes/@types/product.type";
 import { CitiesModule } from "@/modules/dishes/store/cities.module";
 
 @Component({ components: { GroupsManagement, ProductsManagement, Cities } })
@@ -31,7 +31,7 @@ export default class Management extends Vue {
   }
 
   products: Product[] = [];
-  groups: any = [];
+  groups: Category[] = [];
 
   async mounted() {
     // if (!this.productsGroups?.length) await BasketModule.getProductsList();
@@ -55,10 +55,16 @@ export default class Management extends Vue {
 
   async getProducts() {
     this.products = await ProductsManagementService.getProducts();
+    this.products.map((product, i) => {
+      if (!product.price_sort_number) product.price_sort_number = i + 1;
+    });
   }
 
   async getGroups() {
     this.groups = await ProductsManagementService.getGroups();
+    this.groups.map((group, i) => {
+      if (!group.group_sort_number) group.group_sort_number = i + 1;
+    });
   }
 
   async getCities() {

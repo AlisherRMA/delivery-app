@@ -15,6 +15,8 @@ export interface Product {
   prices: ProductPrice[];
   /** количество товаров в подкатегориях, которые были выбраны пользователем */
   overallUserSelectionCount: number;
+
+  price_sort_number?: number;
 }
 
 export interface ProductPrice {
@@ -37,4 +39,5 @@ export interface ProductGroups {
 export interface Category {
   category_id: number;
   name: string;
+  group_sort_number?: number;
 }

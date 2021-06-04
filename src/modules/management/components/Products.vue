@@ -3,19 +3,39 @@
     <div>
       <v-btn color="lightBlue" class="white--text" @click="onAddNewItem">Добавить новый товар</v-btn>
     </div>
+    <div class="mt-2">
+      <v-btn color="lightBlue" class="white--text" @click="isEditOrderMode = true">Изменить порядок</v-btn>
+    </div>
     <div v-if="products && products.length">
-      <v-data-table :headers="headers" :items="products" mobile-breakpoint="md">
+      <v-data-table
+        :headers="headers"
+        :items="sortedArray"
+        mobile-breakpoint="md"
+        :footer-props="{
+          'items-per-page-options': [isEditOrderMode ? 100 : 10],
+        }"
+      >
         <template #item="{item}">
           <tr>
             <!-- <td>{{ item.category_name }}</td> -->
             <td>{{ item.product_name }}</td>
-            <td>
+
+            <td v-if="isEditOrderMode">
+              <v-btn icon v-if="isEditOrderMode" @click="onOrderMovedToTheTop(item)"><v-icon>mdi-arrow-up</v-icon></v-btn>
+              <v-btn icon v-if="isEditOrderMode" @click="onOrderMovedToTheBottom(item)"><v-icon>mdi-arrow-down</v-icon></v-btn>
+            </td>
+            <td v-else>
               <v-btn icon x-small><v-icon @click="onClickOnRow(item)">mdi-pencil</v-icon></v-btn>
               <v-btn icon x-small><v-icon @click="showDeleteDialog(item)">mdi-delete</v-icon></v-btn>
             </td>
           </tr>
         </template>
       </v-data-table>
+
+      <div v-if="isEditOrderMode" class="mt-3">
+        <v-btn color="primary" class="px-10" @click="onSaveProductsOrder">Сохранить</v-btn>
+        <v-btn color="primary" class="px-10 ml-3" outlined @click="isEditOrderMode = false">Отмена</v-btn>
+      </div>
 
       <ConfirmDialog
         ref="deleteDialogRef"
@@ -40,6 +60,7 @@ export default class ProductsManagement extends Vue {
   private products: Product[];
 
   selectedProduct: Nullable<Product> = null;
+  isEditOrderMode = false;
 
   $refs: {
     deleteDialogRef: ConfirmDialog;
@@ -68,6 +89,29 @@ export default class ProductsManagement extends Vue {
     if (!isDeleted) return;
     await ProductsManagementService.deleteProduct(item.id);
     this.$emit("onProductsUpdated");
+  }
+
+  onOrderMovedToTheTop(group: Product) {
+    if (group.price_sort_number! <= 1) return;
+
+    const swapableGroup = this.products.find(iterable => iterable.price_sort_number === group.price_sort_number! - 1);
+    if (swapableGroup && swapableGroup.price_sort_number) swapableGroup.price_sort_number = group.price_sort_number;
+    if (group.price_sort_number) group.price_sort_number--;
+  }
+
+  onOrderMovedToTheBottom(group: Product) {
+    const swapableGroup = this.products.find(iterable => iterable.price_sort_number === group.price_sort_number! + 1);
+    if (swapableGroup && swapableGroup.price_sort_number) swapableGroup.price_sort_number = group.price_sort_number;
+    if (group.price_sort_number) group.price_sort_number++;
+  }
+
+  get sortedArray() {
+    return this.products.sort(({ price_sort_number: a }, { price_sort_number: b }) => (a as number) - (b as number));
+  }
+
+  async onSaveProductsOrder() {
+    await ProductsManagementService.updateProductsOrder(this.products);
+    this.isEditOrderMode = false;
   }
 }
 </script>

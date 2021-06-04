@@ -19,7 +19,7 @@ export class ProductsManagementService {
     return response.data;
   }
 
-  static async getGroups() {
+  static async getGroups(): Promise<Category[]> {
     const response = await Api.get("/api/products/groups");
     return response.data;
   }
@@ -71,6 +71,16 @@ export class ProductsManagementService {
 
   static async updateCity(payload) {
     const response = await Api.post(`/api/products/city`, payload);
+    return response.data;
+  }
+
+  static async updateGroupsOrder(payload: Category[]) {
+    const response = await Api.put(`/api/products/groups/order`, payload);
+    return response.data;
+  }
+
+  static async updateProductsOrder(payload: Product[]) {
+    const response = await Api.put(`/api/products/products/order`, payload);
     return response.data;
   }
 }
