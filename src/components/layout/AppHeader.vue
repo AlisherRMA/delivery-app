@@ -21,7 +21,14 @@
       <div class="text-center my-4">
         <!-- <h1 >Ёж Принёс</h1> -->
         <v-img @click="$router.push('/')" src="@/assets/images/logo.png" width="160" class="mx-auto pointer"></v-img>
-        <p>Мед, Малина, Варенье, Витамины, Орехи в меду, подарки</p>
+        <p class="app-label-xs pa-3" style="font-style: itatyc;">
+          Авторское производство натурального эко меда и варений Premium качества. Готовим деревенским способом, получается очень вкусно и полезно!
+          <br />
+          Собственная пасека в Лепсинске. Казахстанское производство, работаем с 2011 года.
+          <br />
+          <br />
+          Заказать можно по прайс листу ниже. Находимся в Алматы, но доставляем в любой город Казахстана к вам домой или офис.
+        </p>
       </div>
       <div class="my-4 d-flex justify-center">
         <div v-for="(link, i) in links" :key="i" class="d-flex flex-column align-center" :class="link.appendClass || ''">

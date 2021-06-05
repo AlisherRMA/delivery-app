@@ -18,7 +18,10 @@
 }
 
 .app-label-xs {
-  font-size: 1, 125rem;
+  font-size: 1.125rem;
+  @include respond(phone) {
+    font-size: 0.85rem;
+  }
 }
 
 .v-icon.rotate {

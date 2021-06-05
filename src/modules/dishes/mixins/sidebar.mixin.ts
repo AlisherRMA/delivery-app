@@ -19,8 +19,8 @@ export default class SidebarMixin extends Vue {
   scrollTo(group: ProductGroups) {
     if (!group.identificator) return;
     let position = document.getElementById(group.identificator)?.offsetTop;
-    if (this.isMobile && position) position += 190;
-    else if (!this.isMobile && position) position += 220;
+    if (this.isMobile && position) position += 500;
+    else if (!this.isMobile && position) position += 450;
 
     // smooth scroll
     window.scrollTo({ top: position, behavior: "smooth" });
