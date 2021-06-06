@@ -2,6 +2,7 @@ import { Api } from "@/services/api.service";
 // import { ProductGroups } from "../@types/product.type";
 import { Category, Product } from "../../dishes/@types/product.type";
 import { ProductPriceBase } from "../@types/product-price.type";
+import { City } from "../../dishes/@types/city.type";
 
 export class ProductsManagementService {
   static async getProducts() {
@@ -81,6 +82,11 @@ export class ProductsManagementService {
 
   static async updateProductsOrder(payload: Product[]) {
     const response = await Api.put(`/api/products/products/order`, payload);
+    return response.data;
+  }
+
+  static async updateCitiesOrder(payload: City[]) {
+    const response = await Api.put(`/api/products/cities/order`, payload);
     return response.data;
   }
 }

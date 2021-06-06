@@ -23,6 +23,9 @@ export class AuthService {
     if (res.data.accessToken) {
       this.setAuthToken(res.data.accessToken);
       router.push({ name: "Management" });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     }
 
     return res;

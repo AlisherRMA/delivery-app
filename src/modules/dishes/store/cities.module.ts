@@ -10,6 +10,9 @@ class CitiesVuexModule extends VuexModule {
   @MutationAction
   public async getCities() {
     const result = await ProductsService.getCities();
+    result.map((city, i) => {
+      if (!city.city_sort_number) city.city_sort_number = i + 1;
+    });
     return { cities: result };
   }
 }
