@@ -95,7 +95,6 @@ export default class CitiesManagement extends Vue {
 
   async onSaveCitiesOrder() {
     await ProductsManagementService.updateCitiesOrder(this.cities);
-
     this.isEditOrderMode = false;
   }
 }

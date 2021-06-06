@@ -1,11 +1,11 @@
 <template>
   <section class="pa-2">
     <div>
-      <v-btn color="lightBlue" class="white--text" @click="onAddNewItem">Добавить новый товар</v-btn>
+      <v-btn color="lightBlue" class="white--text" @click="onAddNewItem">Добавить товар</v-btn>
+      <v-btn color="lightBlue" class="white--text ml-2" @click="isEditOrderMode = true">Изменить порядок</v-btn>
     </div>
-    <div class="mt-2">
-      <v-btn color="lightBlue" class="white--text" @click="isEditOrderMode = true">Изменить порядок</v-btn>
-    </div>
+    <!-- <div class="mt-2">
+    </div> -->
     <div v-if="products && products.length">
       <v-data-table
         :headers="headers"
