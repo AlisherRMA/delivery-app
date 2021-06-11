@@ -30,6 +30,7 @@
     </div>
 
     <EditCities ref="editCitiesRef" :isNew="isNew" @onUpdate="onUpdate" />
+    <ConfirmDialog ref="deleteDialogRef" color="error" text="Вы действительно хотите удалить указанный город?" />
   </div>
 </template>
 
@@ -39,15 +40,18 @@ import { DataTableHeader } from "vuetify/types";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 import EditCities from "./edit/EditCity.vue";
+import ConfirmDialog from "@/components/ui/dialogs/ConfirmDialog.vue";
+
 import { ProductsManagementService } from "../api/products-management.service";
 
-@Component({ components: { EditCities } })
+@Component({ components: { EditCities, ConfirmDialog } })
 export default class CitiesManagement extends Vue {
   @Prop()
   private cities: City[];
 
   $refs: {
     editCitiesRef: EditCities;
+    deleteDialogRef: ConfirmDialog;
   };
 
   isEditOrderMode = false;
@@ -68,6 +72,13 @@ export default class CitiesManagement extends Vue {
   showAddDialog() {
     this.isNew = true;
     this.$refs.editCitiesRef.show();
+  }
+
+  async showDeleteDialog(city: City) {
+    const isDeleted = await this.$refs.deleteDialogRef.show();
+    if (!isDeleted) return;
+    await ProductsManagementService.deleteCity(city.id);
+    this.$emit("onCitiesUpdated");
   }
 
   async onUpdate(payload) {
